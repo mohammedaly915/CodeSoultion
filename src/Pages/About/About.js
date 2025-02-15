@@ -90,9 +90,9 @@ const OurMission = () => {
 // Our Team Section
 const OurTeam = () => {
   const team = [
-    { name: "Mohammad Yousof", role: "Full-Stack Developer", image: "/team1.jpg" },
-    { name: "Jane Doe", role: "UI/UX Designer", image: "/team2.jpg" },
-    { name: "John Smith", role: "AI Engineer", image: "/team3.jpg" },
+    { name: "Mohammad Yousof", role: "Full-Stack Developer", image: "https://res.cloudinary.com/dswehdo2v/image/upload/v1739649614/avatar-profile-icon-flat-style-male-user-profile-vector-illustration-isolated-background-man-profile-sign-business-concept_157943-38764_jfimri.jpg" },
+    { name: "Jane Doe", role: "UI/UX Designer", image: "https://res.cloudinary.com/dswehdo2v/image/upload/v1739649614/avatar-profile-icon-flat-style-male-user-profile-vector-illustration-isolated-background-man-profile-sign-business-concept_157943-38764_jfimri.jpg" },
+    { name: "John Smith", role: "AI Engineer", image: "https://res.cloudinary.com/dswehdo2v/image/upload/v1739649614/avatar-profile-icon-flat-style-male-user-profile-vector-illustration-isolated-background-man-profile-sign-business-concept_157943-38764_jfimri.jpg" },
   ];
 
   return (

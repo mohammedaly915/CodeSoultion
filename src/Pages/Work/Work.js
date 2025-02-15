@@ -38,7 +38,8 @@ const Work = () => {
     : works.filter(work => work.service === selectedService);
 
   return (
-    <motion.div 
+    <div className='overflow-hidden	'>
+      <motion.div 
       ref={ref}
       className="min-h-screen bg-gradient-to-b from-slate-900 to-blue-900 "
       style={{ scale }}
@@ -131,6 +132,7 @@ const Work = () => {
         />
       </div>
     </motion.div>
+    </div>
   );
 };
 

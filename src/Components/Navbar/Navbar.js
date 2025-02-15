@@ -70,7 +70,7 @@ const Navbar = () => {
             to="/"
             className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent no-underline"
           >
-            Nexus
+            Code Soultions
             <motion.div 
               className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-500 blur-lg opacity-0 hover:opacity-20 transition-opacity"
               initial={{ scale: 0.9 }}

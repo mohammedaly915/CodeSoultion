@@ -1,105 +1,136 @@
-import React, { useRef, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import * as THREE from 'three';
+import React, { useEffect, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { FaBrain, FaChartBar, FaRobot, FaLaptopCode, FaMobileAlt, FaArrowRight } from "react-icons/fa";
+import { Link } from "react-router-dom";
+
+const services = [
+  { id: 1, title: "Data Science", icon: FaBrain },
+  { id: 2, title: "Data Analytics", icon: FaChartBar },
+  { id: 3, title: "AI Solutions", icon: FaRobot },
+  { id: 4, title: "Web Development", icon: FaLaptopCode },
+  { id: 5, title: "Mobile Development", icon: FaMobileAlt },
+];
+
+const AnimatedCTA = ({ text, to, Icon }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      viewport={{ once: false, amount: 0.3 }}
+      className="relative inline-flex items-center overflow-hidden rounded-full shadow-lg group"
+    >
+      <Link
+        to={to}
+        className="px-6 py-3 flex items-center gap-2 text-base font-semibold text-white bg-secondColor rounded-full transition-all duration-300 no-underline hover:no-underline relative"
+      >
+        <motion.div
+          className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"
+        />
+        <motion.div
+          className="w-0 opacity-0 group-hover:w-6 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"
+        >
+          <Icon className="w-5 h-5 text-white" />
+        </motion.div>
+        <motion.span
+          className="relative z-10"
+          whileHover={{ x: 5 }}
+          transition={{ duration: 0.3 }}
+        >
+          {text}
+        </motion.span>
+      </Link>
+    </motion.div>
+  );
+};
+
+
+
+
 
 const ServicesGrid = () => {
-  const services = [
-    { id: 1, title: 'Data Science', description: 'Advanced analytics and predictive modeling', icon: DataScienceIcon },
-    { id: 2, title: 'Data Analysis', description: 'Actionable insights from complex datasets', icon: DataAnalysisIcon },
-    { id: 3, title: 'AI Solutions', description: 'Machine learning & deep learning integration', icon: AiIcon },
-    { id: 4, title: 'Web Development', description: 'Scalable full-stack applications', icon: WebDevIcon },
-    { id: 5, title: 'Cloud Solutions', description: 'AWS, Azure & GCP architecture', icon: CloudIcon },
-    { id: 6, title: 'BI Reporting', description: 'Interactive dashboards & visualization', icon: BiIcon },
-  ];
+  const [randomServices, setRandomServices] = useState([]);
 
-  const canvasRef = useRef(null);
-  const sectionRef = useRef(null);
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
-
-  // Three.js Animation
   useEffect(() => {
-    if (!canvasRef.current) return;
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current, alpha: true });
-    
-    // Particles
-    const geometry = new THREE.BufferGeometry();
-    const vertices = [];
-    for (let i = 0; i < 5000; i++) {
-      vertices.push(
-        THREE.MathUtils.randFloatSpread(2000),
-        THREE.MathUtils.randFloatSpread(2000),
-        THREE.MathUtils.randFloatSpread(2000)
-      );
-    }
-    geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-    
-    const material = new THREE.PointsMaterial({ size: 2, color: 0x00ffff });
-    const particles = new THREE.Points(geometry, material);
-    scene.add(particles);
-
-    camera.position.z = 1000;
-
-    // Animation loop
-    const animate = () => {
-      requestAnimationFrame(animate);
-      particles.rotation.x += 0.0001;
-      particles.rotation.y += 0.0001;
-      renderer.render(scene, camera);
-    };
-
-    animate();
-
-    // Cleanup
-    return () => {
-      geometry.dispose();
-      material.dispose();
-      renderer.dispose();
-    };
+    setRandomServices([...services].sort(() => 0.5 - Math.random()).slice(0, 3));
   }, []);
 
-  return (
-    <section ref={sectionRef} className="relative min-h-screen bg-gradient-to-b from-slate-900 to-blue-900 overflow-hidden">
-      <motion.canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full"
-        style={{ y, scale }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.1 }}
-        transition={{ duration: 1 }}
-      />
-      
-      <div className="container mx-auto px-4 py-24 relative z-10">
-        <motion.h2
-          className="text-4xl md:text-6xl font-bold text-center mb-20 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-600"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          Our Expertise
-        </motion.h2>
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRandomServices(prev => [...prev.slice(1), services.find(s => !prev.includes(s))]);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-          {services.map((service, index) => (
+  // Scroll-based animations
+  const { scrollYProgress } = useScroll();
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.2]); // Parallax scaling
+  const yMove = useTransform(scrollYProgress, [0, 1], [0, -100]); // Parallax movement
+
+  return (
+    <section className="relative bg-gray-900 py-28 px-6 min-h-screen flex items-center overflow-hidden">
+      {/* Background Parallax */}
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-b from-gray-800 to-gray-900"
+        style={{ y: yMove }}
+      />
+
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 items-center relative">
+        
+        {/* Right Content (Appears First) */}
+        <motion.div
+          className="lg:w-1/3 text-center lg:text-left"
+          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, x: 50 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          viewport={{ once: false, amount: 0.2 }}
+        >
+          <motion.h2
+            className="text-5xl md:text-6xl font-extrabold mb-6 text-white leading-tight"
+            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            viewport={{ once: false }}
+          >
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-400">
+              Digital Innovation
+            </span>{" "}
+            Engine
+          </motion.h2>
+          <motion.p
+            className="text-gray-300 text-lg leading-relaxed mb-8"
+            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+            viewport={{ once: false }}
+          >
+            Transformative solutions powered by AI and cutting-edge development expertise.
+          </motion.p>
+          <AnimatedCTA text="Explore Services" to="/services" Icon={FaArrowRight} />
+          </motion.div>
+
+        {/* Left Service Cards with Parallax Scaling */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 flex-1">
+          {randomServices.map((service, index) => (
             <motion.div
               key={service.id}
-              className="group relative bg-gradient-to-br from-slate-800 to-slate-900 p-8 rounded-2xl shadow-2xl hover:shadow-blue-500/20 transition-all duration-300"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              whileHover={{ y: -10 }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
+              className="p-6 bg-gray-800/40 rounded-3xl backdrop-blur-lg hover:shadow-xl transition-all duration-500"
+              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.6, delay: 0.3 + index * 0.2, ease: "easeOut" }}
+              viewport={{ once: false, amount: 0.2 }}
+              style={{ scale }}
             >
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/20 to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              
-              <div className="relative z-10">
-                <service.icon className="w-16 h-16 mb-6 text-cyan-400" />
-                <h3 className="text-2xl font-bold mb-4 text-white">{service.title}</h3>
-                <p className="text-slate-400 leading-relaxed">{service.description}</p>
-              </div>
+              <motion.div
+                className="text-center space-y-6"
+                whileHover={{ y: -5 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              >
+                <div className="inline-block p-4 rounded-2xl bg-gray-700">
+                  <service.icon className="w-16 h-16 text-blue-400" />
+                </div>
+                <h3 className="text-2xl font-semibold text-white">{service.title}</h3>
+              </motion.div>
             </motion.div>
           ))}
         </div>
@@ -108,132 +139,4 @@ const ServicesGrid = () => {
   );
 };
 
-// SVG Icon Components
-const DataScienceIcon = ({ className }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor">
-    <motion.path
-      d="M12 2L3 9L12 16L21 9L12 2Z"
-      initial={{ pathLength: 0 }}
-      whileInView={{ pathLength: 1 }}
-      transition={{ duration: 1 }}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <motion.path
-      d="M3 9L12 16L21 9"
-      initial={{ pathLength: 0 }}
-      whileInView={{ pathLength: 1 }}
-      transition={{ duration: 1, delay: 0.2 }}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
-const DataAnalysisIcon = ({ className }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor">
-    <motion.path
-      d="M3 3v18h18M18 15l-6-6-4 4-2-2"
-      initial={{ pathLength: 0 }}
-      whileInView={{ pathLength: 1 }}
-      transition={{ duration: 1 }}
-      strokeWidth="2"
-    />
-    <motion.circle
-      cx="19"
-      cy="5"
-      r="2"
-      initial={{ scale: 0 }}
-      whileInView={{ scale: 1 }}
-      transition={{ duration: 0.5 }}
-      strokeWidth="2"
-    />
-  </svg>
-);
-
-const AiIcon = ({ className }) =>(<>
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor">
-    <motion.path
-      d="M3 3v18h18M18 15l-6-6-4 4-2-2"
-      initial={{ pathLength: 0 }}
-      whileInView={{ pathLength: 1 }}
-      transition={{ duration: 1 }}
-      strokeWidth="2"
-    />
-    <motion.circle
-      cx="19"
-      cy="5"
-      r="2"
-      initial={{ scale: 0 }}
-      whileInView={{ scale: 1 }}
-      transition={{ duration: 0.5 }}
-      strokeWidth="2"
-    />
-  </svg>
-</>)
-const WebDevIcon = ({ className }) =>(<>
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor">
-    <motion.path
-      d="M3 3v18h18M18 15l-6-6-4 4-2-2"
-      initial={{ pathLength: 0 }}
-      whileInView={{ pathLength: 1 }}
-      transition={{ duration: 1 }}
-      strokeWidth="2"
-    />
-    <motion.circle
-      cx="19"
-      cy="5"
-      r="2"
-      initial={{ scale: 0 }}
-      whileInView={{ scale: 1 }}
-      transition={{ duration: 0.5 }}
-      strokeWidth="2"
-    />
-  </svg>
-</>)
-const CloudIcon = ({ className }) =>(<>
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor">
-    <motion.path
-      d="M3 3v18h18M18 15l-6-6-4 4-2-2"
-      initial={{ pathLength: 0 }}
-      whileInView={{ pathLength: 1 }}
-      transition={{ duration: 1 }}
-      strokeWidth="2"
-    />
-    <motion.circle
-      cx="19"
-      cy="5"
-      r="2"
-      initial={{ scale: 0 }}
-      whileInView={{ scale: 1 }}
-      transition={{ duration: 0.5 }}
-      strokeWidth="2"
-    />
-  </svg>
-</>)
-const BiIcon = ({ className }) =>(<>
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor">
-    <motion.path
-      d="M3 3v18h18M18 15l-6-6-4 4-2-2"
-      initial={{ pathLength: 0 }}
-      whileInView={{ pathLength: 1 }}
-      transition={{ duration: 1 }}
-      strokeWidth="2"
-    />
-    <motion.circle
-      cx="19"
-      cy="5"
-      r="2"
-      initial={{ scale: 0 }}
-      whileInView={{ scale: 1 }}
-      transition={{ duration: 0.5 }}
-      strokeWidth="2"
-    />
-  </svg>
-</>)
-
 export default ServicesGrid;
-
-  

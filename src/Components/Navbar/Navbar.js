@@ -1,220 +1,145 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-
-const navLinks = [
-  { path: '/', name: 'Home' },
-  { path: '/services', name: 'Services' },
-  { path: '/work', name: 'Work' },
-  { path: '/about', name: 'About' },
-  { path: '/contact', name: 'Contact' },
-];
+import { motion, AnimatePresence } from "framer-motion";
+import { Link, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { FaHome, FaUser, FaCogs, FaBriefcase, FaEnvelope, FaBars, FaTimes } from "react-icons/fa";
 
 const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const location = useLocation();
-  const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
 
+  const links = [
+    { name: "Home", path: "/", icon: <FaHome /> },
+    { name: "About", path: "/about", icon: <FaUser /> },
+    { name: "Services", path: "/services", icon: <FaCogs /> },
+    { name: "Work", path: "/work", icon: <FaBriefcase /> },
+    { name: "Contact", path: "/contact", icon: <FaEnvelope /> },
+  ];
+
+  // Scroll progress effect
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const progress = (scrollY / (documentHeight - windowHeight)) * 100;
+      setScrollProgress(progress);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const menuVariants = {
-    open: { 
-      opacity: 1,
-      y: 0,
-      transition: { 
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-        type: 'spring',
-        stiffness: 300
-      }
-    },
-    closed: { 
-      opacity: 0,
-      y: '-100%',
-      transition: {
-        staggerChildren: 0.05,
-        staggerDirection: -1,
-        type: 'spring',
-        stiffness: 300
-      }
-    }
-  };
-
-  const linkVariants = {
-    rest: { scale: 1 },
-    hover: { scale: 1.05 },
-    tap: { scale: 0.95 }
-  };
-
   return (
-    <motion.nav 
-      className={`sticky top-0 z-50 py-4 transition-all duration-300 ${
-        isScrolled ? 'bg-white/95 backdrop-blur-lg shadow-sm' : 'bg-white'
-      }`}
+    <motion.nav
+      className="fixed w-full z-50 font-sans"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.5, type: 'spring' }}
+      transition={{ duration: 0.6, ease: [0.33, 1, 0.68, 1] }}
     >
-      <div className="container mx-auto px-4 flex justify-between items-center">
-        {/* Logo */}
-        <motion.div 
-          whileHover={{ scale: 1.05 }} 
-          whileTap={{ scale: 0.95 }}
-          className="relative"
+      {/* Floating Navbar */}
+      <div className="container mx-auto px-4 md:px-6 py-3">
+        <motion.div
+          className="bg-slate-900/80 backdrop-blur-xl rounded-full shadow-xl relative px-6 py-3 flex justify-between items-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4 }}
         >
-          <Link
-            to="/"
-            className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent no-underline"
-          >
-            Code Soultions
-            <motion.div 
-              className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-500 blur-lg opacity-0 hover:opacity-20 transition-opacity"
-              initial={{ scale: 0.9 }}
-            />
-          </Link>
-        </motion.div>
+          {/* Scroll Progress Indicator */}
+          <motion.div
+            className="absolute bottom-0 left-0 h-1 rounded bg-gradient-to-r from-cyan-400 to-blue-500"
+            style={{ width: `${scrollProgress}%` }}
+          />
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-8">
-          <ul className="flex space-x-6">
-            {navLinks.map((link) => (
-              <motion.li 
-                key={link.path}
-                className="relative"
-                whileHover="hover"
-                whileTap="tap"
-                variants={linkVariants}
+          {/* Logo */}
+          <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
+            <Link to="/" className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent no-underline">
+              Holoul
+            </Link>
+          </motion.div>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex space-x-6">
+            {links.map((link, i) => (
+              <motion.div
+                key={link.name}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 + 0.3 }}
               >
                 <Link
                   to={link.path}
-                  className={`relative z-10 px-4 py-2 text-gray-700 font-medium transition-colors no-underline ${
-                    location.pathname === link.path ? 'text-blue-600' : 'hover:text-blue-600'
+                  className={`relative group flex items-center px-5 py-2 rounded-full transition-all no-underline ${
+                    location.pathname === link.path
+                      ? "bg-cyan-500/20"
+                      : "hover:bg-cyan-500/20"
                   }`}
                 >
-                  {link.name}
-                  {location.pathname === link.path && (
-                    <motion.div 
-                      className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-blue-600 to-cyan-500"
-                      layoutId="activeLink"
-                      transition={{ type: 'spring', stiffness: 500 }}
-                    />
-                  )}
+                  <motion.span className="text-cyan-400 text-xl group-hover:text-white transition-colors">
+                    {link.icon}
+                  </motion.span>
+                  <span className="text-slate-300 group-hover:text-white text-base font-semibold ml-3">
+                    {link.name}
+                  </span>
                 </Link>
-                <motion.div
-                  className="absolute inset-0 bg-gray-100 rounded-lg opacity-0"
-                  variants={{
-                    hover: { opacity: 1, scale: 1.05 },
-                    tap: { scale: 0.95 }
-                  }}
-                  transition={{ duration: 0.2 }}
-                />
-              </motion.li>
+              </motion.div>
             ))}
-          </ul>
-          
-          {/* CTA Button */}
-          <motion.div 
-            whileHover={{ scale: 1.05 }} 
-            whileTap={{ scale: 0.95 }}
-            className="relative"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-cyan-500 blur-lg opacity-0 group-hover:opacity-40 transition-opacity" />
-            <Link
-              to="/contact"
-              className="relative z-10 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-medium py-2.5 px-6 rounded-full shadow-lg hover:shadow-xl transition-all no-underline"
-            >
-              Get Started
-            </Link>
-          </motion.div>
-        </div>
+          </div>
 
-        {/* Mobile Menu Button */}
-        <motion.button
-          className="md:hidden p-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors"
-          onClick={() => setIsOpen(!isOpen)}
-          whileTap={{ scale: 0.95 }}
-          aria-label="Toggle navigation menu"
-        >
-          <svg
-            className="w-6 h-6 text-gray-700"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <motion.path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-              initial={false}
-              animate={{ rotate: isOpen ? 180 : 0 }}
-              transition={{ duration: 0.3 }}
-            />
-          </svg>
-        </motion.button>
-
-        {/* Mobile Menu */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              className="md:hidden fixed inset-0 bg-black/30 backdrop-blur-sm"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsOpen(false)}
-            >
-              <motion.ul
-                className="absolute top-20 right-4 w-64 bg-white/95 backdrop-blur-lg rounded-xl shadow-2xl p-4 space-y-4"
-                variants={menuVariants}
-                initial="closed"
-                animate="open"
-                exit="closed"
-                onClick={(e) => e.stopPropagation()}
-              >
-                {navLinks.map((link) => (
-                  <motion.li 
-                    key={link.path}
-                    variants={linkVariants}
-                  >
-                    <Link
-                      to={link.path}
-                      className={`flex items-center px-4 py-3 rounded-lg transition-all no-underline ${
-                        location.pathname === link.path
-                          ? 'bg-gradient-to-r from-blue-600/10 to-cyan-500/10 text-blue-600'
-                          : 'text-gray-700 hover:bg-gray-100'
-                      }`}
-                      onClick={() => setIsOpen(false)}
-                    >
-                      <span className="relative z-10">{link.name}</span>
-                      {location.pathname === link.path && (
-                        <motion.div 
-                          className="absolute right-4 w-2 h-2 bg-blue-600 rounded-full"
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          transition={{ type: 'spring', stiffness: 500 }}
-                        />
-                      )}
-                    </Link>
-                  </motion.li>
-                ))}
-                <motion.li variants={linkVariants}>
-                  <Link
-                    to="/contact"
-                    className="block text-center bg-gradient-to-r from-blue-600 to-cyan-500 text-white py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all no-underline"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Get Started
-                  </Link>
-                </motion.li>
-              </motion.ul>
-            </motion.div>
-          )}
-        </AnimatePresence>
+          {/* Mobile Menu Button */}
+          <motion.button className="md:hidden p-2 rounded-lg" whileTap={{ scale: 0.9 }} onClick={() => setMenuOpen(!menuOpen)}>
+            <FaBars className="text-xl text-slate-300" />
+          </motion.button>
+        </motion.div>
       </div>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            className="md:hidden fixed inset-0 bg-slate-900/90 backdrop-blur-lg flex flex-col items-center justify-center space-y-6"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            {/* Close Button */}
+            <motion.button
+              className="absolute top-6 right-6 p-3 rounded-full hover:bg-slate-800/50"
+              whileTap={{ scale: 0.8 }}
+              onClick={() => setMenuOpen(false)}
+            >
+              <FaTimes className="text-2xl text-slate-300" />
+            </motion.button>
+
+            {/* Mobile Menu Links */}
+            <motion.div className="flex flex-col items-center space-y-6">
+              {links.map((link, i) => (
+                <motion.div
+                  key={link.name}
+                  initial={{ x: -50, opacity: 0 }}
+                  animate={{ x: 0, opacity: 1 }}
+                  exit={{ x: -50, opacity: 0 }}
+                  transition={{ delay: i * 0.1, duration: 0.3 }}
+                >
+                  <Link
+                    to={link.path}
+                    className={`flex items-center space-x-4 p-4 rounded-full transition-all no-underline ${
+                      location.pathname === link.path ? "bg-slate-800/50" : "hover:bg-slate-800/50"
+                    }`}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {/* Icon Animation */}
+                    <motion.span className="text-cyan-400 text-xl" whileHover={{ scale: 1.2 }}>
+                      {link.icon}
+                    </motion.span>
+                    <span className="text-slate-300 text-lg font-medium">{link.name}</span>
+                  </Link>
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   );
 };

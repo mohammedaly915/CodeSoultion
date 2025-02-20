@@ -3,7 +3,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primeColor: "#B1CF4B",
+        primeColor: "#111827",
         secondColor: "#1C68AA", 
       },
       backdropBlur: {

@@ -18,7 +18,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-blue-900 py-24 px-6 flex items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-primeColor py-24 px-6 flex items-center justify-center">
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}

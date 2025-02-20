@@ -7,13 +7,15 @@ import About from './Pages/About/About';
 import Contact from './Pages/Contact/Contact';
 import Navbar from './Components/Navbar/Navbar';
 import Footer from './Components/Foorter/Footer';
+import ChatBot from './Components/Chatbot/Chatbot';
+import GradioChatBot from './Components/Chatbot/GradioChatBot';
 
 function App() {
   return (  
     <>
-  <div className="min-h-screen flex flex-col">
+  <div className="min-h-screen  bg-primeColor flex flex-col">
         <Navbar />
-        <main className="flex-grow">
+        <main className="">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/work" element={<Work />} />
@@ -23,6 +25,9 @@ function App() {
           </Routes>
         </main>
         <Footer />
+        <ChatBot /> 
+        {/* <GradioChatBot/> */}
+
       </div>
     </>
       

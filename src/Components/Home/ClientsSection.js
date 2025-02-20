@@ -1,122 +1,111 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
+import { FaUsers, FaBriefcase, FaSmileBeam } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+
+const stats = [
+  { id: 1, title: "Projects Delivered", value: 150, suffix: "+", icon: <FaBriefcase /> },
+  { id: 2, title: "Satisfied Clients", value: 120, suffix: "+", icon: <FaSmileBeam /> },
+  { id: 3, title: "Years of Experience", value: 8, suffix: " yrs", icon: <FaUsers /> },
+];
+
+const clients = [
+  require("../../Assets/logo/logo.png"),
+  require("../../Assets/logo/mednet.png"),
+];
 
 const ClientsSection = () => {
-  const clients = [
-    { name: 'TechCorp', industry: 'AI Technology' },
-    { name: 'FinSecure', industry: 'Financial Services' },
-    { name: 'HealthPlus', industry: 'Healthcare' },
-    { name: 'EduFuture', industry: 'Education' },
-    { name: 'GreenEnergy', industry: 'Renewable Energy' },
-    { name: 'RetailHub', industry: 'E-Commerce' },
-  ];
-
-  const sectionRef = useRef(null);
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0, 1, 0.3]);
-  const scale = useTransform(scrollYProgress, [0, 1], [0.9, 1]);
-
-  const WaveDivider = () => (
-    <motion.svg 
-      viewBox="0 0 1440 320" 
-      className="absolute top-0 left-0 w-full"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      transition={{ duration: 1 }}
-    >
-      <path
-        fill="#f3f4f6"
-        fillOpacity="1"
-        d="M0,128L48,149.3C96,171,192,213,288,213.3C384,213,480,171,576,170.7C672,171,768,213,864,234.7C960,256,1056,256,1152,234.7C1248,213,1344,171,1392,149.3L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
-      >
-        <animate
-          attributeName="d"
-          dur="15s"
-          repeatCount="indefinite"
-          values="
-            M0,128L48,149.3C96,171,192,213,288,213.3C384,213,480,171,576,170.7C672,171,768,213,864,234.7C960,256,1056,256,1152,234.7C1248,213,1344,171,1392,149.3L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z;
-            M0,128L48,117.3C96,107,192,85,288,106.7C384,128,480,192,576,192C672,192,768,128,864,101.3C960,75,1056,85,1152,101.3C1248,117,1344,139,1392,149.3L1440,160L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z;
-            M0,128L48,149.3C96,171,192,213,288,213.3C384,213,480,171,576,170.7C672,171,768,213,864,234.7C960,256,1056,256,1152,234.7C1248,213,1344,171,1392,149.3L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z
-          "
-        />
-      </path>
-    </motion.svg>
-  );
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "start center"] });
+  const parallaxY = useTransform(scrollYProgress, [0, 1], [-60, 60]);
+  const navigate = useNavigate();
 
   return (
-    <motion.section 
-      ref={sectionRef}
-      className="relative py-24 bg-gradient-to-b from-gray-100 to-white overflow-hidden"
-      style={{ opacity, scale }}
-    >
-      <WaveDivider />
+    <motion.section ref={ref} className="relative bg-primeColor py-28 overflow-hidden">
+      {/* Background Parallax Effects */}
+      <motion.div className="absolute top-[-120px] left-20 w-80 h-80 bg-secondColor/40 rounded-full blur-[150px]" style={{ y: parallaxY }} />
+      <motion.div className="absolute bottom-[-140px] right-20 w-96 h-96 bg-white/25 rounded-full blur-[180px]" style={{ y: parallaxY }} />
       
-      <div className="container mx-auto px-4 text-center relative z-10">
-        <motion.h2
-          className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-500"
-          initial={{ y: 50, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-          Trusted by Innovators
+      <motion.div className="container mx-auto px-6 text-center" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>
+        {/* Section Title */}
+        <motion.h2 className="text-4xl md:text-5xl font-bold text-white mb-14" style={{ y: useTransform(scrollYProgress, [0, 1], [-30, 0]) }}>
+          Trusted by <span className="text-secondColor">Top Companies</span>
         </motion.h2>
-
-        <motion.p
-          className="text-lg text-gray-600 mb-12 max-w-2xl mx-auto"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-        >
-          Partnering with industry leaders to drive digital transformation
-        </motion.p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {clients.map((client, index) => (
-            <motion.div
-              key={client.name}
-              className="relative bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "0px 0px -100px 0px" }}
-              transition={{ delay: index * 0.15, duration: 0.5 }}
-            >
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 to-blue-600" />
-              
-              <div className="mb-6">
-                <svg
-                  className="w-16 h-16 mx-auto text-blue-600"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <motion.path
-                    d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
-                    initial={{ pathLength: 0 }}
-                    whileInView={{ pathLength: 1 }}
-                    transition={{ duration: 1, delay: index * 0.1 }}
-                  />
-                </svg>
-              </div>
-
-              <h3 className="text-2xl font-bold text-gray-800 mb-2">{client.name}</h3>
-              <p className="text-gray-600">{client.industry}</p>
-            </motion.div>
+        
+        {/* Stats Cards */}
+        <motion.div className="grid md:grid-cols-3 gap-12 max-w-5xl mx-auto">
+          {stats.map((stat) => (
+            <StatCard key={stat.id} stat={stat} />
           ))}
-        </div>
-
-        <motion.div
-          className="mt-16 flex justify-center"
-          initial={{ scale: 0 }}
-          whileInView={{ scale: 1 }}
-          transition={{ type: "spring", stiffness: 100 }}
-        >
-          <div className="text-sm font-semibold text-gray-600 px-6 py-2 rounded-full bg-gray-50 shadow-inner">
-            Trusted by 1000+ companies worldwide
-          </div>
         </motion.div>
-      </div>
+        
+        {/* Client Logos */}
+        <motion.div className="mt-16 flex flex-wrap justify-center gap-16" initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, ease: "easeOut" }}>
+          {clients.map((logo, index) => (
+            <motion.img 
+              key={index} 
+              src={logo} 
+              alt={`Client ${index + 1}`} 
+              className="h-20 opacity-90 transition-all duration-300 hover:scale-110 hover:rotate-3" 
+              whileHover={{ scale: 1.2, rotate: 5 }}
+            />
+          ))}
+        </motion.div>
+        
+        {/* CTA Button */}
+        <motion.button
+          onClick={() => navigate("/contact")}
+          className="mt-12 px-6 py-3 bg-secondColor text-white rounded-xl text-lg font-medium shadow-lg relative overflow-hidden"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <motion.span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
+          Contact Us
+        </motion.button>
+      </motion.div>
     </motion.section>
+  );
+};
+
+const StatCard = ({ stat }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (isInView) {
+      let start = 0;
+      const end = stat.value;
+      const duration = 1200;
+      let stepTime = Math.abs(Math.floor(duration / end));
+      let timer = setInterval(() => {
+        start += 1;
+        if (start > end) {
+          clearInterval(timer);
+        } else {
+          setCount(start);
+        }
+      }, stepTime);
+      return () => clearInterval(timer);
+    }
+  }, [isInView]);
+
+  return (
+    <motion.div
+      ref={ref}
+      className="relative p-8 bg-white/5 rounded-xl shadow-lg flex flex-col items-center transition-all transform hover:scale-105"
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
+      <motion.div className="text-6xl text-secondColor mb-3">{stat.icon}</motion.div>
+      <motion.div className="text-6xl font-bold text-white">
+        {count}
+        <span className="text-secondColor">{stat.suffix}</span>
+      </motion.div>
+      <h3 className="text-white text-lg font-medium mt-2">{stat.title}</h3>
+    </motion.div>
   );
 };
 

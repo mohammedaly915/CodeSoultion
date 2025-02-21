@@ -1,12 +1,17 @@
 import { useState, useRef, useEffect } from "react";
 import { FiMessageSquare, FiX, FiSend } from "react-icons/fi";
 
+
+
+
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
+
+  
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -15,6 +20,7 @@ const ChatBot = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,6 +37,12 @@ const ChatBot = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message }),
       });
+
+      
+
+      
+    
+    
 
       if (!response.ok) {
         throw new Error("Server error, please try again.");

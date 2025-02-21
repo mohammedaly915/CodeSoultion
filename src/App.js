@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Home from './Pages/Home/Home';
 import Work from "./Pages/Work/Work";
 import Services from './Pages/Services/Services';
@@ -9,8 +9,19 @@ import Navbar from './Components/Navbar/Navbar';
 import Footer from './Components/Foorter/Footer';
 import ChatBot from './Components/Chatbot/Chatbot';
 import GradioChatBot from './Components/Chatbot/GradioChatBot';
+import { useEffect } from 'react';
 
 function App() {
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth' // Optional: adds smooth scrolling
+    });
+  }, [pathname]);
   return (  
     <>
   <div className="min-h-screen  bg-primeColor flex flex-col">

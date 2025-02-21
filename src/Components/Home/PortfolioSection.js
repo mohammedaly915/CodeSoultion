@@ -34,8 +34,8 @@ const PortfolioSection = () => {
 
       <div className="relative container mx-auto px-4 flex flex-col md:flex-row items-center gap-16">
         {/* Portfolio Image with Parallax Effect */}
-        <motion.img
-          src="/portfolio-image.jpg"
+        {/* <motion.img
+          src="https://res.cloudinary.com/dswehdo2v/image/upload/v1739639611/image10_iizxu7.png"
           alt="Portfolio Work"
           loading="lazy"
           className="w-full md:w-1/2 object-cover rounded-3xl shadow-lg"
@@ -44,7 +44,24 @@ const PortfolioSection = () => {
           whileInView={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
           viewport={{ once: true }}
-        />
+        /> */}
+        {/* Image Section */}
+        <motion.div
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.2, ease: 'easeOut' }}
+            className="relative lg:h-[600px] lg:w-[600px]"
+          >
+            <div className="absolute inset-0 bg-secondColor/15 rounded-3xl backdrop-blur-md shadow-lg -z-10" />
+            <motion.img
+              src="https://res.cloudinary.com/dswehdo2v/image/upload/v1739639611/image10_iizxu7.png"
+              alt="Our team collaborating"
+              className="w-full h-full object-cover rounded-3xl shadow-2xl relative z-10"
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 1.5, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }}
+            />
+          </motion.div>
 
         {/* Content Section with Parallax Effect */}
         <motion.div
@@ -56,14 +73,14 @@ const PortfolioSection = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-4xl md:text-6xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-purple-400 to-indigo-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-secondColor to-white bg-clip-text text-transparent">
               Our Portfolio
             </span>
           </h2>
 
           {/* Animated Divider */}
           <motion.div
-            className="w-24 h-1 bg-gradient-to-r from-purple-400 to-indigo-500 rounded-full mb-4"
+            className="w-24 h-1 bg-gradient-to-r from-secondColor to-white bg-clip-text rounded-full mb-4"
             initial={{ scaleX: 0 }}
             whileInView={{ scaleX: 1 }}
             transition={{ duration: 0.5 }}
@@ -74,7 +91,7 @@ const PortfolioSection = () => {
           </p>
 
           <motion.button
-            className="px-8 py-4 bg-purple-400 text-slate-900 rounded-full font-semibold shadow-md hover:shadow-lg hover:bg-purple-500 transition-transform"
+            className="px-8 py-4 bg-secondColor  rounded-full font-semibold shadow-md hover:shadow-lg hover:bg-secondColor transition-transform"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => navigate("/work")}

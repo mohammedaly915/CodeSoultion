@@ -9,6 +9,13 @@ module.exports = {
       backdropBlur: {
         lg: '20px',
       },
+      backgroundImage:{
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+      },
+      boxShadow: {
+        'glow': '0 0 30px rgba(28, 104, 170, 0.2)',
+      }
+
     },
   },
   plugins: [],

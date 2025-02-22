@@ -4,6 +4,7 @@ import { FiMessageSquare, FiX, FiSend } from "react-icons/fi";
 
 
 
+
 const ChatBot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState("");

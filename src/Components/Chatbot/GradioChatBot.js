@@ -11,7 +11,8 @@ const GradioChatBot = () => {
 
     const initializeChatbot = () => {
       const gradioApp = document.createElement('gradio-app');
-      gradioApp.setAttribute('src', 'https://abdelrahman12012-solutions-chatbot.hf.space');
+      gradioApp.setAttribute('src', 'https://abdelrahman12012-labchatbot.hf.space/');
+      // gradioApp.setAttribute('src', 'https://abdelrahman12012-solutions-chatbot.hf.space');
       
       // Styling for bottom-left positioning
       gradioApp.style.position = 'fixed';
@@ -53,7 +54,7 @@ const GradioChatBot = () => {
       {/* Toggle Button */}
       <button
         onClick={() => setIsVisible(!isVisible)}
-        className="fixed bottom-8 left-8 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-all z-50"
+        className="fixed bottom-10 left-8 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-all z-50"
         aria-label="Chatbot toggle"
       >
         {isVisible ? (
@@ -64,7 +65,7 @@ const GradioChatBot = () => {
       </button>
 
       {/* Chatbot Container */}
-      <div ref={containerRef} className="fixed bottom-[100px] left-8 z-40" />
+      <div ref={containerRef} className="fixed bottom-[50px] left-8 z-40" />
     </div>
   );
 };

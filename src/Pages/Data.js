@@ -57,7 +57,7 @@ export const generalOptions = {
 
   // Options for Challenges Section
 export  const challengeOptions = [
-    { value: "No Barrier", label: "No Barrier" },
+    { value: "Not a Barrier", label: "Not a Barrier" },
     { value: "Minor Barrier", label: "Minor Barrier" },
     { value: "Moderate Barrier", label: "Moderate Barrier" },
     { value: "Significant Barrier", label: "Significant Barrier" },

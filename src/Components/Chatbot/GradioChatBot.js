@@ -16,14 +16,14 @@ const GradioChatBot = () => {
       
       // Styling for bottom-left positioning
       gradioApp.style.position = 'fixed';
-      gradioApp.style.bottom = '80px';
-      gradioApp.style.left = '20px';
+      gradioApp.style.bottom = '250px';
+      gradioApp.style.left = '100px';
       gradioApp.style.width = '350px';
       gradioApp.style.height = '500px';
       gradioApp.style.borderRadius = '12px';
       gradioApp.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
       gradioApp.style.transition = 'opacity 0.3s ease';
-      gradioApp.style.zIndex = '40';
+      gradioApp.style.zIndex = '999';
 
       containerRef.current.appendChild(gradioApp);
     };

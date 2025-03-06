@@ -58,12 +58,12 @@ const Services = () => {
    
 
   return (
-    <div ref={ref} className="relative min-h-[400vh] bg-primeColor ">
+    <div ref={ref} className="relative min-h-[400vh] bg-primeColor mt-[10vh] ">
 
       {/* Content container */}
       <div className="relative flex flex-col z-10 py-24 px-4 sm:px-6 lg:px-8">
         <motion.h1 
-          className="text-5xl md:text-7xl overflow-hidden font-bold text-center mb-20 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500"
+          className="text-5xl md:text-7xl font-extrabold overflow-hidden  text-center mb-20 bg-clip-text text-transparent bg-gradient-to-r from-secondColor to-white"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}

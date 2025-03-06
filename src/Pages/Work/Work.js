@@ -72,7 +72,7 @@ const Work = () => {
 
   // style={{ scale }}
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-hidden mt-[10vh]">
       <motion.div ref={ref} className="min-h-screen bg-primeColor" >
         <div className="container mx-auto px-4 py-24">
         <WorkHero />

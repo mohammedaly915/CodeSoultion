@@ -11,8 +11,8 @@ const GradioChatBot = () => {
 
     const initializeChatbot = () => {
       const gradioApp = document.createElement('gradio-app');
-      gradioApp.setAttribute('src', 'https://abdelrahman12012-labchatbot.hf.space/');
-      // gradioApp.setAttribute('src', 'https://abdelrahman12012-solutions-chatbot.hf.space');
+      //gradioApp.setAttribute('src', 'https://abdelrahman12012-labchatbot.hf.space/');
+      gradioApp.setAttribute('src', 'https://abdelrahman12012-solutions-chatbot.hf.space');
       
       // Styling for bottom-left positioning
       gradioApp.style.position = 'fixed';

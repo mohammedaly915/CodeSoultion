@@ -57,19 +57,21 @@ const NavbarContent = memo(({ setMenuOpen, menuOpen, setIsModalOpen }) => {
       </motion.div>
 
       {/* Desktop Navigation */}
-      <div className="hidden md:flex items-center space-x-8">
+      <div className="hidden md:flex items-center  gap-[5px]">
         {links.map((link, i) => (
           <NavLink key={link.name} link={link} index={i} />
         ))}
-        <motion.button
+        
+      </div>
+
+      <motion.button
           onClick={() => setIsModalOpen(true)}
-          className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-6 py-2.5 rounded-lg font-semibold shadow-md hover:from-cyan-400 hover:to-blue-500 active:from-cyan-600 active:to-blue-700 transition-all duration-300"
+          className="hidden md:block bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-6 py-2.5 rounded-lg font-semibold shadow-md hover:from-cyan-400 hover:to-blue-500 active:from-cyan-600 active:to-blue-700 transition-all duration-300"
           whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(34, 211, 238, 0.4)" }}
           whileTap={{ scale: 0.95 }}
         >
           Contact Us
         </motion.button>
-      </div>
 
       {/* Mobile Menu Toggle */}
       <motion.button
@@ -270,7 +272,7 @@ const ScrollProgressBar = memo(({ progress }) => {
   return (
     <svg
       ref={barRef}
-      className="absolute  inset-0 w-full h-full -z-10 pointer-events-none"
+      className="absolute  inset-0 w-full h-full z-30 pointer-events-none"
       preserveAspectRatio="none"
     >
       {/* Background rectangle */}
@@ -299,7 +301,7 @@ const ScrollProgressBar = memo(({ progress }) => {
         strokeLinecap="round"
         initial={{ strokeDashoffset: perimeter }}
         animate={{ strokeDashoffset }}
-        transition={{ duration: 0.3, ease: "easeInOut" }}
+        transition={{ duration: 0.1 }}
       />
       {/* Gradient definition */}
       <defs>

@@ -9,7 +9,7 @@ const WorkHero = () => {
       transition={{ duration: 0.8 }}
     >
       <motion.h1 
-        className="text-5xl md:text-6xl font-bold text-white mb-6 bg-gradient-to-r from-teal-400 to-cyan-500 bg-clip-text text-transparent"
+        className="text-5xl md:text-7xl font-extrabold bg-gradient-to-r from-white  to-secondColor bg-clip-text text-transparent tracking-tight"
       >
         Our Portfolio
       </motion.h1>

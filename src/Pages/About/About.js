@@ -19,7 +19,7 @@ const AboutPage = () => {
   return (
     <div
       ref={scrollRef}
-      className="min-h-screen bg-gradient-to-b from-primeColor via-primeColor/95 to-primeColor text-gray-100 overflow-x-hidden"
+      className="min-h-screen bg-gradient-to-b from-primeColor via-primeColor/95 to-primeColor text-gray-100 overflow-x-hidden mt-[10vh]"
     >
       {/* Scroll Progress Bar */}
       <motion.div

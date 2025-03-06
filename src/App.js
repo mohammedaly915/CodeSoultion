@@ -10,10 +10,6 @@ import Footer from './Components/Foorter/Footer';
 import ChatBot from './Components/Chatbot/Chatbot';
 import GradioChatBot from './Components/Chatbot/GradioChatBot';
 import { useEffect } from 'react';
-import ModelSelectionPage from './Pages/ModelSelectionPage';
-import ReviewPage from './Pages/Review';
-import ResultPage from './Pages/Result';
-
 function App() {
 
   const { pathname } = useLocation();
@@ -27,18 +23,15 @@ function App() {
   }, [pathname]);
   return (  
     <>
-  <div className="min-h-screen  bg-primeColor flex flex-col">
-        {/* <Navbar /> */}
-        <main className="">
+  <div className="min-h-screen  bg-primeColor flex flex-col items-center ">
+        <Navbar />
+        <main className="w-full overflow-hidden ">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/work" element={<Work />} />
             <Route path="/services" element={<Services />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/model" element={<ModelSelectionPage />} />
-            <Route path="/review" element={<ReviewPage />} />
-            <Route path="/result" element={<ResultPage />} />
           </Routes>
         </main>
         <Footer />

@@ -7,7 +7,8 @@ import {
   FaMapMarkerAlt,
   FaPhone,
   FaCode,
-  FaBalanceScale
+  FaBalanceScale,
+  FaInstagram
 } from "react-icons/fa";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 
@@ -56,13 +57,18 @@ const BrandSection = memo(() => {
   };
 
   const contact = [
-    { icon: <FaMapMarkerAlt className="w-5 h-5 text-secondColor" />, text: '123 Tech Street, Silicon Valley, CA' },
-    { icon: <FaRegEnvelope className="w-5 h-5 text-secondColor" />, text: 'contact@holoul.com' },
+    { icon: <FaMapMarkerAlt className="w-5 h-5 text-secondColor" />, text: 'Dubai, Emirates' },
+    { icon: <FaRegEnvelope className="w-5 h-5 text-secondColor" />, text: 'smtp.holoul.com' },
     { icon: <FaPhone className="w-5 h-5 text-secondColor" />, text: '+1 (555) 123-4567' }
   ];
 
+  // Function to handle email click
+  const handleEmailClick = (email) => {
+    window.location.href = `mailto:${email}`; // Opens default email client
+  };
+
   return (
-    <motion.div variants={itemVariants} className="space-y-8">
+    <motion.div variants={itemVariants} className="w-full space-y-8">
       <motion.div whileHover={{ scale: 1.05 }} className="flex items-center gap-4 mb-6">
         <motion.div
           animate={{ rotate: [0, 15, -15, 0] }}
@@ -80,6 +86,8 @@ const BrandSection = memo(() => {
           </p>
         </div>
       </motion.div>
+
+      {/* details contact */}
       <div className="space-y-5">
         {contact.map((item, index) => (
           <motion.div
@@ -94,7 +102,16 @@ const BrandSection = memo(() => {
             >
               {item.icon}
             </motion.span>
-            <span className="text-sm text-gray-300 group-hover:text-secondColor transition-colors duration-300">
+            <span
+              className={`text-sm text-gray-300 group-hover:text-secondColor transition-colors duration-300 ${
+                item.text.includes('@') || item.text.includes('.com') ? 'cursor-pointer' : ''
+              }`}
+              onClick={() => {
+                if (item.text === 'smtp.holoul.com') {
+                  handleEmailClick(item.text);
+                }
+              }}
+            >
               {item.text}
             </span>
           </motion.div>
@@ -112,7 +129,7 @@ const LinksSection = memo(() => {
   };
 
   const links = [
-    { title: 'Solutions', icon: <FaCode className="w-6 h-6 text-secondColor" />, items: ['AI Development', 'Data Analytics', 'Cloud Solutions', 'Web Services'] },
+    { title: 'Solutions', icon: <FaCode className="w-6 h-6 text-secondColor" />, items: ['AI Development', 'Data Analytics', 'Mobile Development', 'Web Services'] },
     { title: 'Company', icon: <HiOutlineBuildingOffice2 className="w-6 h-6 text-secondColor" />, items: ['About Us', 'Careers', 'Blog', 'Contact'] },
     { title: 'Legal', icon: <FaBalanceScale className="w-6 h-6 text-secondColor" />, items: ['Privacy Policy', 'Terms of Service', 'Cookie Settings'] }
   ];
@@ -257,21 +274,22 @@ const FooterBottom = memo(() => {
         </span>
       </motion.p>
       <motion.div variants={itemVariants} className="flex items-center gap-6">
+        
         <motion.a
-          href="#"
-          className="text-gray-400 hover:text-secondColor transition-colors duration-300"
-          whileHover={{ scale: 1.2, rotate: 360 }}
-          transition={{ duration: 0.5 }}
-        >
-          <FaGithub className="w-6 h-6" />
-        </motion.a>
-        <motion.a
-          href="#"
+          href="https://linkedin.com"
           className="text-gray-400 hover:text-secondColor transition-colors duration-300"
           whileHover={{ scale: 1.2, rotate: 360 }}
           transition={{ duration: 0.5 }}
         >
           <FaLinkedin className="w-6 h-6" />
+        </motion.a>
+        <motion.a
+          href="https://www.instagram.com/holoul1/"
+          className="text-gray-400 hover:text-secondColor transition-colors duration-300"
+          whileHover={{ scale: 1.2, rotate: 360 }}
+          transition={{ duration: 0.5 }}
+        >
+          <FaInstagram className="w-6 h-6" />
         </motion.a>
         <motion.div variants={itemVariants} className="h-6 w-px bg-gray-700/70" />
         <motion.a
@@ -291,6 +309,6 @@ const FooterBottom = memo(() => {
       </motion.div>
     </motion.div>
   );
-});
+})
 
 export default Footer;

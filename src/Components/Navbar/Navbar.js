@@ -92,62 +92,84 @@ const NavbarContent = memo(({ setMenuOpen, menuOpen, setIsModalOpen }) => {
 // Reusable NavLink Component
 const NavLink = memo(({ link, index, onClick }) => {
   const location = useLocation();
-  const isActive = location.pathname === link.path;
+  const isActive = location.pathname === link.path && !link.disabled;
 
   return (
     <motion.div
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.15 + 0.2, type: "spring", stiffness: 150 }}
-      className="relative"
+      className={`relative ${link.disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}
     >
-      <Link
-        to={link.path}
-        onClick={onClick}
-        className={`flex items-center px-5 py-2.5 rounded-xl transition-all duration-300 no-underline group ${
-          isActive
-            ? "bg-gradient-to-r from-secondColor to-white bg-clip-text text-white shadow-[0_0_12px_rgba(139,92,246,0.2)]"
-            : "hover:bg-gray-700/40"
-        }`}
-      >
-        {/* Icon */}
-        <motion.span
-          className={`w-5 h-5 ${
-            isActive ? "text-secondColor/2" : "text-secondColor"
-          } group-hover:text-seocndColor transition-colors duration-300`}
-          whileHover={{ scale: 1.15, rotate: 360 }}
-          transition={{ duration: 0.4 }}
+      <div className="group relative">
+        <Link
+          to={link.disabled ? "#" : link.path}
+          onClick={(e) => {
+            if (link.disabled) {
+              e.preventDefault();
+              return;
+            }
+            if (onClick) onClick();
+          }}
+          className={`flex items-center px-5 py-2.5 rounded-xl transition-all duration-300 no-underline group ${
+            isActive
+              ? "bg-gradient-to-r from-secondColor to-white bg-clip-text text-white shadow-[0_0_12px_rgba(139,92,246,0.2)]"
+              : link.disabled
+              ? "opacity-50 cursor-not-allowed"
+              : "hover:bg-gray-700/40"
+          }`}
         >
-          {link.icon}
-        </motion.span>
+          {/* Icon */}
+          <motion.span
+            className={`w-5 h-5 ${
+              isActive ? "text-secondColor/2" : "text-secondColor"
+            } ${link.disabled ? "text-gray-400" : "group-hover:text-secondColor"} transition-colors duration-300`}
+            whileHover={!link.disabled ? { scale: 1.15, rotate: 360 } : {}}
+            transition={{ duration: 0.4 }}
+          >
+            {link.icon}
+          </motion.span>
 
-        {/* Text */}
-        <span
-          className={`ml-3 text-base font-semibold ${
-            isActive ? "text-white" : "text-gray-200"
-          } group-hover:text-white transition-colors duration-300`}
-        >
-          {link.name}
-        </span>
+          {/* Text */}
+          <span
+            className={`ml-3 text-base font-semibold ${
+              isActive ? "text-white" : link.disabled ? "text-gray-400" : "text-gray-200"
+            } ${!link.disabled && "group-hover:text-white"} transition-colors duration-300`}
+          >
+            {link.name}
+          </span>
 
-        {/* Active Indicator */}
-        {isActive && (
+          {/* Active Indicator */}
+          {isActive && (
+            <motion.div
+              className="absolute -bottom-1 left-1/2 w-8 h-1 bg-gradient-to-r from-secondColor to-white bg-clip-text rounded-full transform -translate-x-1/2"
+              layoutId="activeIndicator"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ type: "spring", stiffness: 200, damping: 20 }}
+            />
+          )}
+        </Link>
+
+        {/* Tooltip for disabled link */}
+        {link.disabled && link.tooltip && (
+          <motion.div 
+            className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1 bg-gray-800 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50"
+            initial={{ y: 10 }}
+            animate={{ y: 0 }}
+          >
+            {link.tooltip}
+          </motion.div>
+        )}
+
+        {/* Hover Glow Effect (only for non-disabled links) */}
+        {!link.disabled && (
           <motion.div
-            className="absolute -bottom-1 left-1/2 w-8 h-1 bg-gradient-to-r from-secondColor to-white bg-clip-text rounded-full transform -translate-x-1/2"
-            layoutId="activeIndicator"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: "spring", stiffness: 200, damping: 20 }}
+            className="absolute inset-0 rounded-xl bg-gradient-to-r from-secondColor to-white bg-clip-text opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            style={{ zIndex: -1 }}
           />
         )}
-      </Link>
-
-      {/* Hover Glow Effect */}
-      <motion.div
-        className="absolute inset-0 rounded-xl bg-gradient-to-r from-secondColor to-white bg-clip-text
- opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        style={{ zIndex: -1 }}
-      />
+      </div>
     </motion.div>
   );
 });
@@ -353,12 +375,28 @@ const ContactIcon = () => (
   </svg>
 );
 
-// Updated links array with custom SVG icons
+const CourseIcon = () => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M2 3h20v6H2z" />
+    <path d="M2 9h20v12H2z" />
+    <path d="M7 14h10" />
+    <path d="M7 17h5" />
+  </svg>
+);
+
+// Update the links array (replace the existing one)
 const links = [
   { name: "Home", path: "/", icon: <HomeIcon /> },
   { name: "About", path: "/about", icon: <AboutIcon /> },
   { name: "Service", path: "/services", icon: <ServiceIcon /> },
   { name: "Work", path: "/work", icon: <WorkIcon /> },
+  { 
+    name: "Courses", 
+    path: "/courses", 
+    icon: <CourseIcon />, 
+    disabled: true,
+    tooltip: "Coming Soon"
+  },
   { name: "Contact", path: "/contact", icon: <ContactIcon /> },
 ];
 

@@ -14,21 +14,21 @@ const services = [
 const AnimatedCTA = ({ text, to, Icon }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
+      initial={{ opacity: 0, scale: 0.9 }}
       whileInView={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
       viewport={{ once: false, amount: 0.3 }}
-      className="relative inline-flex items-center overflow-hidden rounded-full shadow-lg group"
+      className="relative  inline-flex items-center overflow-hidden rounded-full group shadow-md"
     >
       <Link
         to={to}
-        className="px-6 py-3 flex items-center gap-2 text-base font-semibold text-white bg-secondColor rounded-full transition-all duration-300 no-underline hover:no-underline relative"
+        className="px-8 py-3 flex no-underline items-center gap-2 text-lg font-semibold text-white bg-gradient-to-r from-gray-500 to-secondColor rounded-full transition-transform duration-300 hover:scale-105 hover:shadow-xl relative"
       >
         <motion.div
-          className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"
+          className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-20 transition-opacity duration-300 rounded-full"
         />
         <motion.div
-          className="w-0 opacity-0 group-hover:w-6 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300"
+          className="flex items-center justify-center w-8 h-8 bg-white/20 rounded-full group-hover:bg-white/40 transition duration-300"
         >
           <Icon className="w-5 h-5 text-white" />
         </motion.div>
@@ -43,6 +43,7 @@ const AnimatedCTA = ({ text, to, Icon }) => {
     </motion.div>
   );
 };
+
 
 
 

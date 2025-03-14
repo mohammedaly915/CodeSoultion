@@ -4,62 +4,11 @@ import { useRef } from 'react';
 import FilterButtons from '../../Components/Work/FilterButton';
 import WorkHero from '../../Components/Work/WorkHero';
 import WorkGrid from '../../Components/Work/WorkGrid';
+import {works} from "../../Data";
 
 
 
 
-const works = [
-  {
-    id: 1,
-    title: 'Smart Analytics Platform',
-    service: 'Data Analytics',
-    icon:require("../../Assets/logo/mednet.png"),
-    image: 'https://res.cloudinary.com/dswehdo2v/image/upload/v1739639610/donation_20website_20templates_ib70as.jpg',
-    website: 'https://example.com/analytics',
-    description: 'A powerful analytics platform designed to help businesses make data-driven decisions.',
-    techStack: ['React', 'Node.js', 'AWS'],
-  },
-  {
-    id: 2,
-    title: 'AI-powered Chatbot',
-    service: 'AI Solutions',
-    icon:require("../../Assets/logo/logo.png"),
-    image: 'https://res.cloudinary.com/dswehdo2v/image/upload/v1739639610/donation_20website_20templates_ib70as.jpg',
-    website: 'https://example.com/chatbot',
-    description: 'An intelligent chatbot that uses natural language processing to engage users effectively.',
-    techStack: ['React', 'Node.js', 'AWS'],
-  },
-  {
-    id: 3,
-    title: 'Al-Shifa',
-    service: 'Web',
-    icon:require("../../Assets/logo/logo.png"),
-    image: require('../../Assets/Work/Alshifa.jpeg'),
-    website: 'https://www.alshifalab.net/',
-    description: 'A healthcare management system built to streamline operations for clinics and laboratories.',
-    techStack: ['React', 'Node.js', 'AWS'],
-  },
-  {
-    id: 4,
-    title: 'E-commerce Store',
-    service: 'Web',
-    icon:require("../../Assets/logo/mednet.png"),
-    image: 'https://res.cloudinary.com/dswehdo2v/image/upload/v1739639610/donation_20website_20templates_ib70as.jpg',
-    website: 'https://example.com/ecommerce',
-    description: 'A fully functional e-commerce store with payment integration and user authentication.',
-    techStack: ['React', 'Node.js', 'Stripe'],
-  },
-  {
-    id: 5,
-    title: 'Portfolio Website',
-    service: 'Web',
-    icon:require("../../Assets/logo/mednet.png"),
-    image: 'https://res.cloudinary.com/dswehdo2v/image/upload/v1739639610/donation_20website_20templates_ib70as.jpg',
-    website: 'https://example.com/portfolio',
-    description: 'A sleek and modern portfolio website showcasing personal projects and skills.',
-    techStack: ['React', 'Tailwind CSS', 'Framer Motion'],
-  },
-];
 
 const Work = () => {
   const [filter, setFilter] = useState('all');

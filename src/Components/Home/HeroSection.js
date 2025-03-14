@@ -1,6 +1,7 @@
 import { motion, useMotionValue, useTransform, useScroll } from "framer-motion";
 import { useRef } from "react";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import GlassButton from "../Utiles/Button";
 
 const images = [
   { src: "https://res.cloudinary.com/dswehdo2v/image/upload/v1739639610/donation_20website_20templates_ib70as.jpg", link: "#" },
@@ -60,15 +61,12 @@ const HeroSection = () => {
           Where innovation meets execution to drive your business forward.
         </motion.p>
 
-        <motion.a
-          href="#"
-          className="mt-6 inline-block bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg transition-transform transform hover:scale-105"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-        >
-          Get Started
-        </motion.a>
+        <GlassButton
+  href="#"
+  className="mt-8"
+>
+  Get Started
+</GlassButton>
       </div>
     </section>
   );

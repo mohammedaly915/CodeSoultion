@@ -1,205 +1,142 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { FaGithub, FaTwitter, FaLinkedin, FaFacebook, FaGoogle } from "react-icons/fa";
+import { FaGoogle, FaInstagram, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import AnimatedInput from '../../Components/Utiles/AnimatedInput';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    business: '',
-    message: ''
-  });
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission logic
-  };
+  
 
   return (
-    <div className="min-h-screen mt-[10vh] bg-gradient-to-br from-slate-900 to-primeColor py-24 px-6 flex items-center justify-center">
+    <div className="min-h-screen bg-primeColor py-24 px-6 flex items-center justify-center">
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="w-full max-w-4xl bg-white/5 backdrop-blur-xl rounded-3xl p-10 shadow-xl grid md:grid-cols-2 gap-12"
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        className="w-full max-w-5xl bg-white/10 backdrop-blur-2xl rounded-3xl p-12 shadow-2xl grid md:grid-cols-2 gap-12"
       >
-        {/* Contact Form */}
-        <div>
-          <h1 className="text-5xl font-extrabold mb-8  text-transparent bg-gradient-to-r from-secondColor to-white bg-clip-text">
-            Get in Touch
-          </h1>
-          <motion.form
-            onSubmit={handleSubmit}
-            className="space-y-6"
-            initial={{ scale: 0.95 }}
-            whileInView={{ scale: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <AnimatedInput
-              label="Your Name"
-              type="text"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              required
-            />
-            <AnimatedInput
-              label="Your Email"
-              type="email"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              required
-            />
-            <AnimatedInput
-              label="Your Phone"
-              type="tel"
-              value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-            />
-            <AnimatedInput
-              label="Your Business"
-              type="text"
-              value={formData.business}
-              onChange={(e) => setFormData({ ...formData, business: e.target.value })}
-            />
-            <AnimatedInput
-              label="Your Message"
-              type="textarea"
-              value={formData.message}
-              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              required
-            />
-            <motion.button
-              whileHover={{ scale: 1.05, boxShadow: "0px 0px 15px rgba(34, 211, 238, 0.3)" }}
-              whileTap={{ scale: 0.95 }}
-              className="w-full py-4 px-6 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold text-lg rounded-xl shadow-md hover:from-cyan-400 hover:to-blue-500 transition-all"
-              type="submit"
-            >
-              Send Message
-            </motion.button>
-          </motion.form>
-        </div>
-
-        {/* Contact Details */}
-        <div className="space-y-8">
-          <div className="space-y-6">
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-              Our Details
-            </h2>
-            
-            <div className="flex items-start gap-4">
-              <LocationIcon className="w-8 h-8 text-cyan-400 flex-shrink-0" />
-              <div>
-                <h3 className="text-xl font-semibold text-white">Our Office</h3>
-                <p className="text-gray-300 leading-relaxed">
-                  123 Tech Street,<br />
-                  Innovation City,<br />
-                  Digital Nation
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <WhatsAppIcon className="w-8 h-8 text-cyan-400 flex-shrink-0" />
-              <div>
-                <h3 className="text-xl font-semibold text-white">WhatsApp</h3>
-                <a 
-                  href="https://wa.me/1234567890" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="text-gray-300 hover:text-cyan-400 transition-colors"
-                >
-                  +1 (234) 567-890
-                </a>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <FaGoogle className="w-8 h-8 text-cyan-400 flex-shrink-0" />
-              <div>
-                <h3 className="text-xl font-semibold text-white">Email</h3>
-                <a 
-                  href="mailto:info@techsolutions.com" 
-                  className="text-gray-300 hover:text-cyan-400 transition-colors"
-                >
-                  info@techsolutions.com
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <SocialLinks />
-        </div>
+        <ContactForm />
+        <ContactDetails />
       </motion.div>
     </div>
   );
 };
 
-const AnimatedInput = ({ label, type = 'text', value, onChange, required }) => {
-  const [isFocused, setIsFocused] = useState(false);
+
+const ContactForm = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    business: '',
+    message: '',
+  });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsSubmitted(true);
+    setTimeout(() => setIsSubmitted(false), 3000); // Reset after 3s
+    // Add submission logic here
+  };
+
+  const handleChange = (field) => (e) => setFormData({ ...formData, [field]: e.target.value });
 
   return (
-    <motion.div
-      className="relative"
-      whileHover={{ scale: 1.02 }}
-      transition={{ type: 'spring', stiffness: 300 }}
-    >
-      <motion.label
-        className={`absolute left-4 transition-all text-gray-300 pointer-events-none ${
-          isFocused || value ? 'text-sm text-cyan-400 -top-2 bg-gradient-to-br from-slate-900 to-primeColor px-2' : 'text-base top-4'
-        }`}
+    <div className="space-y-8">
+      <h1 className="text-5xl font-extrabold text-white bg-gradient-to-r from-secondColor to-white bg-clip-text text-transparent">
+        Let’s Connect
+      </h1>
+      <motion.form
+        onSubmit={handleSubmit}
+        className="space-y-6"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2, duration: 0.5 }}
       >
-        {label}
-      </motion.label>
-      {type === 'textarea' ? (
-        <motion.textarea
-          className="w-full bg-white/5  rounded-xl p-4 pt-6 text-white focus:outline-none hover:bg-white/10 transition-colors resize-none"
-          value={value}
-          onChange={onChange}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          rows="5"
-          required={required}
-        />
-      ) : (
-        <motion.input
-          className="w-full bg-white/5  rounded-xl p-4 pt-6 text-white focus:outline-none hover:bg-white/10 transition-colors"
-          type={type}
-          value={value}
-          onChange={onChange}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          required={required}
-        />
-      )}
-    </motion.div>
+        <AnimatedInput label="Name" type="text" value={formData.name} onChange={handleChange('name')} required />
+        <AnimatedInput label="Email" type="email" value={formData.email} onChange={handleChange('email')} required />
+        <AnimatedInput label="Phone" type="tel" value={formData.phone} onChange={handleChange('phone')} />
+        <AnimatedInput label="Business" type="text" value={formData.business} onChange={handleChange('business')} />
+        <AnimatedInput label="Message" type="textarea" value={formData.message} onChange={handleChange('message')} required />
+        <motion.button
+          whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(28, 104, 170, 0.4)' }}
+          whileTap={{ scale: 0.95 }}
+          className="w-full py-4 bg-gradient-to-r from-secondColor to-cyan-500 text-white font-semibold rounded-xl shadow-lg hover:from-cyan-400 hover:to-blue-600 transition-all duration-300"
+          type="submit"
+        >
+          {isSubmitted ? 'Sent!' : 'Send Message'}
+        </motion.button>
+      </motion.form>
+    </div>
   );
 };
-
-const SocialLinks = () => {
-  const socials = [
-    { name: 'GitHub', icon: <FaGithub className="w-6 h-6" />, link: '#' },
-    { name: 'LinkedIn', icon: <FaLinkedin className="w-6 h-6" />, link: '#' },
-    { name: 'Twitter', icon: <FaTwitter className="w-6 h-6" />, link: '#' },
-    { name: 'Facebook', icon: <FaFacebook className="w-6 h-6" />, link: '#' }
+const ContactDetails = () => {
+  const details = [
+    {
+      icon: (
+        <div className="p-2 bg-white/10 rounded-full">
+          <LocationIcon className="w-6 h-6 text-secondColor" />
+        </div>
+      ),
+      title: 'Office',
+      content: <span className="text-gray-200 text-sm">Dubai, Emirates</span>,
+      link: null, // No link for office (static info)
+    },
+    {
+      icon: (
+        <div className="p-2 bg-white/10 rounded-full">
+          <FaInstagram className="w-6 h-6 text-secondColor" />
+        </div>
+      ),
+      title: 'Instgram',
+      content: <span className="text-gray-200 text-sm">holoul1</span>,
+      link: 'https://www.instagram.com/holoul1',
+    },
+    {
+      icon: (
+        <div className="p-2 bg-white/10 rounded-full">
+          <FaGoogle className="w-6 h-6 text-secondColor" />
+        </div>
+      ),
+      title: 'Email',
+      content: <span className="text-gray-200 text-sm">smtp.holoul.com</span>,
+      link: 'mailto:smtp.holoul.com',
+    },
+    {
+      icon: (
+        <div className="p-2 bg-white/10 rounded-full">
+          <FaLinkedin className="w-6 h-6 text-secondColor" />
+        </div>
+      ),
+      title: 'Linked In',
+      content: <span className="text-gray-200 text-sm">hulool-حلول</span>,
+      link: 'https://www.linkedin.com/company/hulool-%D8%AD%D9%84%D9%88%D9%84/posts?lipi=urn%3Ali%3Apage%3Ad_flagship3_company_admin_dashboard_index%3BMld5Dpl9RpmbCsNgcynvfA%3D%3D',
+    },
   ];
 
   return (
-    <div className="space-y-4">
-      <h3 className="text-xl font-semibold text-white">Follow Us</h3>
-      <div className="flex gap-6">
-        {socials.map((social) => (
+    <div className="space-y-12 text-white">
+      <h2 className="text-4xl font-bold bg-gradient text-transparent bg-clip-text tracking-tight">
+        Reach Us
+      </h2>
+      <div className="space-y-6">
+        {details.map((item, index) => (
           <motion.a
-            key={social.name}
-            href={social.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-gray-300 hover:text-cyan-400 transition-colors"
-            whileHover={{ scale: 1.2, rotate: 5 }}
-            whileTap={{ scale: 0.9 }}
-            transition={{ type: 'spring', stiffness: 300 }}
+            key={index}
+            href={item.link || '#'} // Fallback to '#' if no link
+            target={item.link ? '_blank' : '_self'}
+            rel={item.link ? 'noopener noreferrer' : undefined}
+            className={`flex items-center gap-4 bg-white/5 rounded-lg p-4 transition-colors duration-300 ${
+              item.link ? 'hover:bg-white/10 cursor-pointer' : 'cursor-default'
+            }`}
+            whileHover={item.link ? { scale: 1.02 } : {}}
+            transition={{ duration: 0.3 }}
           >
-            {social.icon}
+            {item.icon}
+            <div>
+              <h3 className="text-lg font-semibold text-gray-100">{item.title}</h3>
+              {item.content}
+            </div>
           </motion.a>
         ))}
       </div>
@@ -207,7 +144,35 @@ const SocialLinks = () => {
   );
 };
 
-// Icons remain the same
+
+// const SocialLinks = () => {
+//   const socials = [
+//     { name: 'LinkedIn', icon: <FaLinkedin className="w-7 h-7" />, link: 'https://linkedin.com' },
+//     { name: 'Instagram', icon: <FaInstagram className="w-7 h-7" />, link: 'https://instagram.com/holoul_official' },
+//   ];
+
+//   return (
+//     <div className="space-y-4">
+//       <h3 className="text-xl font-medium text-gray-100">Follow Us</h3>
+//       <div className="flex gap-6">
+//         {socials.map((social) => (
+//           <motion.a
+//             key={social.name}
+//             href={social.link}
+//             target="_blank"
+//             rel="noopener noreferrer"
+//             className="text-gray-300 hover:text-secondColor transition-colors duration-300"
+//             whileHover={{ scale: 1.15, rotate: 5 }}
+//             whileTap={{ scale: 0.95 }}
+//           >
+//             {social.icon}
+//           </motion.a>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// }
+// Icons
 const LocationIcon = (props) => (
   <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />

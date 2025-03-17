@@ -93,7 +93,7 @@ const ServicesGrid = () => {
             transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
             viewport={{ once: false }}
           >
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-400">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-secondColor to-white">
               Digital Innovation
             </span>{" "}
             Engine
@@ -111,7 +111,7 @@ const ServicesGrid = () => {
           </motion.div>
 
         {/* Left Service Cards with Parallax Scaling */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 flex-1">
+        <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-8 flex-1">
           {randomServices.map((service, index) => (
             <motion.div
               key={service.id}
@@ -128,7 +128,7 @@ const ServicesGrid = () => {
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
                 <div className="inline-block p-4 rounded-2xl bg-gray-700">
-                  <service.icon className="w-16 h-16 text-blue-400" />
+                  <service.icon className="w-16 h-16 text-secondColor" />
                 </div>
                 <h3 className="text-2xl font-semibold text-white">{service.title}</h3>
               </motion.div>

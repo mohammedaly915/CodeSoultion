@@ -35,7 +35,7 @@ export const works = [
     id: 1,
     title: 'AI-powered Chatbot',
     service: 'AI Solutions',
-    icon: require("./Assets/logo/logo.png"),
+    icon: "https://res.cloudinary.com/dswehdo2v/image/upload/v1742169257/Gemini_Generated_Image_7oqc647oqc647oqc_1_edgvzn.svg",
     image: 'https://res.cloudinary.com/dswehdo2v/image/upload/v1739639610/donation_20website_20templates_ib70as.jpg',
     website: 'https://example.com/chatbot',
     description: 'An intelligent chatbot that uses natural language processing to engage users effectively.',
@@ -74,8 +74,8 @@ export const works = [
     id: 5,
     title: 'LlamaIndex-Powered Document Retrieval System',
     service: 'AI Solutions',
-    icon: require("./Assets/logo/mednet.png"),
-    image: 'https://res.cloudinary.com/dswehdo2v/image/upload/v1739639610/donation_20website_20templates_ib70as.jpg',
+    icon: "https://res.cloudinary.com/dswehdo2v/image/upload/v1742169257/Gemini_Generated_Image_7oqc647oqc647oqc_1_edgvzn.svg",
+    image: 'https://res.cloudinary.com/dswehdo2v/image/upload/v1742171265/WhatsApp_Image_2025-03-16_at_18.56.06_3489d10e_awzsn5.jpg',
     description: 'Built a smart document retrieval system for querying and summarizing uploaded reports.',
     techStack: ['LlamaIndex', 'Pinecone', 'AWS Cloud', 'Vector Embeddings'],
   },
@@ -83,8 +83,8 @@ export const works = [
     id: 6,
     title: 'Predictive Model for Medical Standards Compliance',
     service: 'AI Solutions',
-    icon: require("./Assets/logo/mednet.png"),
-    image: 'https://res.cloudinary.com/dswehdo2v/image/upload/v1739639610/donation_20website_20templates_ib70as.jpg',
+    icon: "https://res.cloudinary.com/dswehdo2v/image/upload/v1742169257/Gemini_Generated_Image_7oqc647oqc647oqc_1_edgvzn.svg",
+    image: 'https://res.cloudinary.com/dswehdo2v/image/upload/v1742171266/WhatsApp_Image_2025-03-17_at_00.26.05_66748ee9_lzvu12.jpg',
     description: 'Developed a classification model to determine compliance with global medical standards.',
     techStack: ['GRU', 'RoBERTa', 'Flask API'],
   },
@@ -92,7 +92,7 @@ export const works = [
     id: 7,
     title: 'Customer Churn Prediction for E-Commerce Platforms',
     service: 'Data Science',
-    icon: require("./Assets/logo/mednet.png"),
+    icon: "https://res.cloudinary.com/dswehdo2v/image/upload/v1742169257/Gemini_Generated_Image_7oqc647oqc647oqc_1_edgvzn.svg",
     image: 'https://res.cloudinary.com/dswehdo2v/image/upload/v1739639610/donation_20website_20templates_ib70as.jpg',
     description: 'Developed a predictive model to identify customers at risk of churning.',
     techStack: ['XGBoost', 'Random Forest', 'Feature Engineering'],
@@ -101,7 +101,7 @@ export const works = [
     id: 8,
     title: 'AI-Based Sentiment Analysis for Social Media Monitoring',
     service: 'Data Science',
-    icon: require("./Assets/logo/mednet.png"),
+    icon: "https://res.cloudinary.com/dswehdo2v/image/upload/v1742169257/Gemini_Generated_Image_7oqc647oqc647oqc_1_edgvzn.svg",
     image: 'https://res.cloudinary.com/dswehdo2v/image/upload/v1739639610/donation_20website_20templates_ib70as.jpg',
     description: 'Designed an NLP system to analyze sentiment in Arabic and English social media posts.',
     techStack: ['Transformers', 'LSTM', 'Hugging Face', 'Flask'],
@@ -110,9 +110,67 @@ export const works = [
     id: 9,
     title: 'Automated Document Summarization System',
     service: 'Data Science',
-    icon: require("./Assets/logo/mednet.png"),
+    icon: "https://res.cloudinary.com/dswehdo2v/image/upload/v1742169257/Gemini_Generated_Image_7oqc647oqc647oqc_1_edgvzn.svg",
     image: 'https://res.cloudinary.com/dswehdo2v/image/upload/v1739639610/donation_20website_20templates_ib70as.jpg',
     description: 'Built an AI-powered system for summarizing legal and business documents.',
     techStack: ['TextRank', 'BERT', 'NLP', 'FastAPI'],
+  },
+];
+
+export const servicess = [
+  {
+    title: "Data Analytics",
+    description: "Unlock insights from your data with advanced analytics and visualization.",
+    specs: ["Big Data", "Data Visualization", "Predictive Analytics", "Business Intelligence"],
+    color: "from-cyan-600 to-emerald-500",
+    offset: 150
+  },
+  {
+    title: "AI Solutions",
+    description: "Transform your business with intelligent automation and machine learning solutions.",
+    specs: ["Machine Learning", "Deep Learning", "Natural Language Processing", "AI-powered Chatbots"],
+    color: "from-purple-600 to-blue-500",
+    offset: 250
+  },
+  {
+    title: "Support in Scientific Research and Academic Papers",
+    description: "Transform your business with intelligent automation and machine learning solutions.",
+    specs: [" Data analysis using SPSS, Python, R.", " Assistance in writing research papers following academic standards", "Designing websites to showcase research findings and engage with audiences"],
+    color: "from-purple-600 to-blue-500",
+    offset: 250
+  },
+  {
+    title: "Mobile Development",
+    description: "Build cross-platform mobile experiences with native performance.",
+    specs: [
+      "iOS & Android Development",
+      "Flutter",
+      "Mobile UI/UX Design",
+      "API Integration",
+      "App Store Optimization"
+    ],
+    color: "from-purple-500 to-pink-400",
+    offset: 350
+  },
+
+  {
+    title: "Web Development",
+    description: "Build high-performance web applications with modern architectures.",
+    specs: ["React/Next.js", "Full-Stack Development", "Progressive Web Apps", "API Development"],
+    color: "from-pink-600 to-rose-400",
+    offset: 450
+  },
+  {
+    title: "Data Science",
+    description: "Transform raw data into actionable insights through advanced analytics and machine learning.",
+    specs: [
+      "Predictive Modeling",
+      "Data Mining & Wrangling",
+      "Statistical Analysis",
+      "Big Data Processing",
+      "ML Ops & Deployment"
+    ],
+    color: "from-green-500 to-teal-400",
+    offset: 250
   },
 ];

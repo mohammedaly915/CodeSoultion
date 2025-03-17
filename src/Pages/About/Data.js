@@ -4,8 +4,8 @@ import { SiReact, SiNodedotjs, SiPython, SiAws, SiMongodb, SiDocker } from 'reac
 
 export const TeamMembers = [
   {
-    name: 'John Doe',
-    role: 'CEO & Founder',
+    name: 'Abdelrahman Emad',
+    role: 'Founder & Data Scientist',
     photo: 'https://res.cloudinary.com/dswehdo2v/image/upload/v1739649614/avatar-profile-icon-flat-style-male-user-profile-vector-illustration-isolated-background-man-profile-sign-business-concept_157943-38764_jfimri.jpg',
     socialLinks: [
       { name: 'Twitter', url: '#', icon: <FaTwitter /> },
@@ -14,12 +14,12 @@ export const TeamMembers = [
     ]
   },
   {
-    name: 'Jane Smith',
-    role: 'CTO',
-    photo: 'https://res.cloudinary.com/dswehdo2v/image/upload/v1739649611/3a3f2d35-8167-4708-9ef0-bdaa980989f9_n90tq6.jpg',
+    name: 'Muhammed Aly',
+    role: 'CO-Founder & Software Engineering',
+    photo: 'https://res.cloudinary.com/dswehdo2v/image/upload/v1739649614/avatar-profile-icon-flat-style-male-user-profile-vector-illustration-isolated-background-man-profile-sign-business-concept_157943-38764_jfimri.jpg',
     socialLinks: [
       { name: 'Twitter', url: '#', icon: <FaTwitter /> },
-      { name: 'Medium', url: '#', icon: <FaMedium /> },
+      { name: 'Linked In', url: '#', icon: <FaLinkedin /> },
       { name: 'Website', url: '#', icon: <FaGlobe /> }
     ]
   },

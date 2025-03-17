@@ -43,7 +43,7 @@ const ContactForm = () => {
 
   return (
     <div className="space-y-8">
-      <h1 className="text-5xl font-extrabold text-white bg-gradient-to-r from-secondColor to-white bg-clip-text text-transparent">
+      <h1 className="text-5xl font-extrabold text-white bg-gradient-to-r from-secondColor to-white-500 bg-clip-text text-transparent">
         Let’s Connect
       </h1>
       <motion.form
@@ -61,7 +61,7 @@ const ContactForm = () => {
         <motion.button
           whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(28, 104, 170, 0.4)' }}
           whileTap={{ scale: 0.95 }}
-          className="w-full py-4 bg-gradient-to-r from-secondColor to-cyan-500 text-white font-semibold rounded-xl shadow-lg hover:from-cyan-400 hover:to-blue-600 transition-all duration-300"
+          className="w-full py-4 bg-gradient-to-r from-secondColor to-white-500 text-white font-semibold rounded-xl shadow-lg hover:bg-secondColor/60  transition-all duration-300"
           type="submit"
         >
           {isSubmitted ? 'Sent!' : 'Send Message'}
@@ -126,7 +126,7 @@ const ContactDetails = () => {
             href={item.link || '#'} // Fallback to '#' if no link
             target={item.link ? '_blank' : '_self'}
             rel={item.link ? 'noopener noreferrer' : undefined}
-            className={`flex items-center gap-4 bg-white/5 rounded-lg p-4 transition-colors duration-300 ${
+            className={`flex no-underline items-center gap-4 bg-white/5 rounded-lg p-4 transition-colors duration-300 ${
               item.link ? 'hover:bg-white/10 cursor-pointer' : 'cursor-default'
             }`}
             whileHover={item.link ? { scale: 1.02 } : {}}

@@ -172,18 +172,12 @@ const LinksSection = memo(() => {
 const NewsletterSection = memo(() => {
   const itemVariants = {
     hidden: { y: 30, opacity: 0 },
-    visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: "easeOut" } }
+    visible: { y: 0, opacity: 1, transition: { duration: 0.5, ease: "easeOut" } },
   };
 
   return (
-    <motion.div
-      variants={itemVariants}
-      className="space-y-6 lg:max-w-sm" // Constrain width on larger screens
-    >
-      <motion.div
-        variants={itemVariants}
-        className="flex items-center gap-4 mb-4"
-      >
+    <motion.div variants={itemVariants} className="space-y-6 lg:max-w-sm">
+      <motion.div variants={itemVariants} className="flex items-center gap-4 mb-4">
         <motion.span
           whileHover={{ scale: 1.1, rotate: 10 }}
           animate={{ rotate: [0, 5, -5, 0] }}
@@ -204,28 +198,27 @@ const NewsletterSection = memo(() => {
       <motion.form
         variants={itemVariants}
         className="space-y-4"
-        onSubmit={(e) => e.preventDefault()} // Prevent default form submission for demo
+        onSubmit={(e) => e.preventDefault()}
       >
         <motion.input
           whileFocus={{
-            borderColor: "#1C68AA",
-            boxShadow: "0 0 0 4px rgba(28, 104, 170, 0.2)",
-            scale: 1.02
+            boxShadow: "0 0 12px rgba(28, 104, 170, 0.4), 0 0 0 4px rgba(28, 104, 170, 0.2)", // Enhanced shadow on focus
+            scale: 1.02,
           }}
-          whileHover={{ scale: 1.01 }}
+          whileHover={{ scale: 1.01, boxShadow: "0 0 8px rgba(28, 104, 170, 0.2)" }} // Subtle hover shadow
           type="email"
           placeholder="Enter your email"
-          className="w-full px-4 py-3 bg-gradient-to-r from-gray-800/80 to-gray-900/80 border border-secondColor/20 rounded-xl focus:outline-none text-sm text-gray-200 placeholder-gray-400 transition-all duration-300 shadow-inner"
+          className="w-full px-4 py-3 bg-gradient-to-r from-gray-800/80 to-gray-900/80 rounded-xl focus:outline-none text-sm text-gray-200 placeholder-gray-400 transition-all duration-300 shadow-md" // Base shadow
         />
         <motion.button
           whileHover={{
             scale: 1.05,
             backgroundImage: "linear-gradient(to right, #1C68AA, #2563eb)",
-            boxShadow: "0 0 15px rgba(28, 104, 170, 0.3)"
+            boxShadow: "0 0 15px rgba(28, 104, 170, 0.5)", // Stronger hover shadow
           }}
           whileTap={{ scale: 0.95 }}
           type="submit"
-          className="w-full px-4 py-3 bg-gradient-to-r from-secondColor/30 to-secondColor/10 backdrop-blur-md border border-secondColor/40 rounded-xl text-sm font-semibold text-secondColor hover:text-white transition-all duration-300 shadow-[0_0_10px_rgba(28,104,170,0.1)]"
+          className="w-full px-4 py-3 bg-gradient-to-r from-secondColor/30 to-secondColor/10 backdrop-blur-md rounded-xl text-sm font-semibold text-secondColor hover:text-white transition-all duration-300 shadow-md" // Base shadow
         >
           Subscribe
         </motion.button>

@@ -1,8 +1,9 @@
 import { motion, useTransform, useScroll } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { TeamMembers, valuesList, techStack } from './Data';
-import { FaHandshake, FaLightbulb, FaUsers, FaRocket } from 'react-icons/fa';
+import { FaHandshake, FaLightbulb, FaUsers, FaRocket, FaArrowRight } from 'react-icons/fa';
 import { useRef } from 'react';
+import AnimatedButton from '../../Components/Utiles/AnimatedButton';
 
 const AboutPage = () => {
   const scrollRef = useRef();
@@ -19,7 +20,7 @@ const AboutPage = () => {
   return (
     <div
       ref={scrollRef}
-      className="min-h-screen bg-gradient-to-b from-primeColor via-primeColor/95 to-primeColor text-gray-100 overflow-x-hidden mt-[10vh]"
+      className="min-h-screen bg-gradient-to-b from-primeColor via-primeColor/95 to-primeColor text-gray-100 overflow-x-hidden "
     >
       {/* Scroll Progress Bar */}
       <motion.div
@@ -48,15 +49,8 @@ const AboutPage = () => {
               At <span className="font-semibold">Holoul</span>, we bridge the gap between visionary ideas and technical execution. 
               Our passionate team of developers, designers, and strategists crafts digital solutions that transform businesses and empower communities.
             </p>
-            <div className="flex gap-6">
-              <Link
-                to="/contact"
-                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-secondColor to-secondColor/80 text-white text-lg font-semibold rounded-full transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_rgba(255,85,85,0.5)]"
-              >
-                Start Your Journey
-              </Link>
+            <AnimatedButton text="Start Your Journey" to="/contact" Icon={FaArrowRight} />
             </div>
-          </div>
 
           {/* Image Section */}
           <motion.div
@@ -292,43 +286,8 @@ const FinalCTA = () => {
         >
           Whether you're launching a startup, scaling an enterprise, or reimagining your digital presence, our team at Holoul is here to guide you every step of the way. Let’s build something extraordinary together.
         </motion.p>
-        <motion.div
-          variants={{
-            hidden: { opacity: 0, y: 50 },
-            visible: { opacity: 1, y: 0 },
-          }}
-        >
-          <Link
-            to="/contact"
-            className="relative no-underline inline-flex items-center px-8 py-4 bg-gradient-to-r from-secondColor via-secondColor/90 to-secondColor/70 text-white text-lg font-semibold rounded-full overflow-hidden transition-all duration-500 ease-in-out transform hover:scale-110 hover:shadow-[0_0_30px_rgba(255,85,85,0.7)] group"
-          >
-            <span className="absolute inset-0 bg-white/25 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full scale-0 group-hover:scale-105 origin-center" />
-            <span className="relative z-10 transition-transform duration-500 ease-in-out group-hover:pr-3">
-              Start Your Digital Journey
-            </span>
-            <motion.span
-              className="relative z-10 ml-2 w-6 h-6 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out"
-              initial={{ x: -10 }}
-              animate={{ x: 0 }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                className="w-full h-full"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 7l5 5m0 0l-5 5m5-5H6"
-                />
-              </svg>
-            </motion.span>
-          </Link>
-        </motion.div>
+        <AnimatedButton text="Start Your Digital Journey" to="/contact" Icon={FaArrowRight} />
+
       </motion.div>
     </section>
   );

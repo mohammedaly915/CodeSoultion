@@ -1,9 +1,10 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef, memo } from "react";
-import { FaHome, FaUser, FaCogs, FaBriefcase, FaEnvelope, FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaPhone } from "react-icons/fa";
+import { links } from "./IconsAndLinks";
+import ContactPOP from "./ContactPOP";
 
-// Main Navbar Component
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -25,71 +26,70 @@ const Navbar = () => {
   return (
     <motion.nav
       ref={navbarRef}
-      className="fixed top-4 m-auto w-[90%]  z-30 font-sans"
+      className="fixed top-4  transform -translate-x-1/2 w-[95%] sm:w-[90%] md:w-[85%] lg:w-[80%] xl:w-[75%] max-w-6xl z-50 font-sans"
       initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 0.9 }}
+      animate={{ y: 0, opacity: 0.95 }}
       transition={{ duration: 0.6, ease: [0.33, 1, 0.68, 1] }}
     >
-      <ScrollProgressBar progress={scrollProgress}/>
+      <ScrollProgressBar progress={scrollProgress} />
       <NavbarContent setMenuOpen={setMenuOpen} menuOpen={menuOpen} setIsModalOpen={setIsModalOpen} />
       <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} setIsModalOpen={setIsModalOpen} />
-      <ContactModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
+      <ContactPOP isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
     </motion.nav>
   );
 };
-
-// Navbar Content (Logo, Desktop Links, Toggle)
 const NavbarContent = memo(({ setMenuOpen, menuOpen, setIsModalOpen }) => {
   return (
     <motion.div
-      className="relative bg-gray-900/95 backdrop-blur-lg rounded-xl shadow-[0_6px_25px_rgba(0,0,0,0.4)] px-6 py-4 flex justify-between items-center"
+      className="relative bg-gray-900/90 backdrop-blur-lg rounded-xl shadow-lg px-4 sm:px-6 py-3 flex items-center justify-between w-full"
       initial={{ scale: 0.95, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       {/* Logo */}
-      <motion.div whileHover={{ scale: 1.1, rotate: 5 }} transition={{ type: "spring", stiffness: 300 }}>
+      <motion.div whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 300 }}>
         <Link to="/" className="flex items-center gap-2 no-underline">
-          <span className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-600 bg-clip-text text-transparent">
-            Holoul
-          </span>
+          <img
+            src="https://res.cloudinary.com/dswehdo2v/image/upload/v1742169257/Gemini_Generated_Image_7oqc647oqc647oqc_1_edgvzn.svg"
+            className="h-12 sm:h-14 md:h-16"
+            alt="Holoul Logo"
+          />
         </Link>
       </motion.div>
 
       {/* Desktop Navigation */}
-      <div className="hidden md:flex items-center  gap-[5px]">
+      <div className="hidden lg:flex items-center gap-4 lg:gap-6">
         {links.map((link, i) => (
           <NavLink key={link.name} link={link} index={i} />
         ))}
-        
       </div>
 
+      {/* Desktop CTA */}
       <motion.button
-          onClick={() => setIsModalOpen(true)}
-          className="hidden md:block bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-6 py-2.5 rounded-lg font-semibold shadow-md hover:from-cyan-400 hover:to-blue-500 active:from-cyan-600 active:to-blue-700 transition-all duration-300"
-          whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(34, 211, 238, 0.4)" }}
-          whileTap={{ scale: 0.95 }}
-        >
-          Contact Us
-        </motion.button>
+        onClick={() => setIsModalOpen(true)}
+        className="hidden lg:flex items-center bg-gradient-to-r from-secondColor to-white-400 text-white px-4 lg:px-5 py-2 rounded-lg font-semibold shadow-md hover:bg-secondColor/80 transition-all duration-300"
+        whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(28, 104, 170, 0.3)" }}
+        whileTap={{ scale: 0.95 }}
+      >
+        Contact Us
+      </motion.button>
 
       {/* Mobile Menu Toggle */}
       <motion.button
-        className="md:hidden p-2.5 rounded-lg bg-gray-800/70 hover:bg-gray-700/70 transition-colors"
+        className="lg:hidden p-2 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 transition-colors"
         whileTap={{ scale: 0.9 }}
         onClick={() => setMenuOpen(!menuOpen)}
       >
         {menuOpen ? (
-          <FaTimes className="text-xl text-cyan-400" />
+          <FaTimes className="text-xl text-secondColor" />
         ) : (
-          <FaBars className="text-xl text-cyan-400" />
+          <FaBars className="text-xl text-secondColor" />
         )}
       </motion.button>
     </motion.div>
   );
 });
 
-// Reusable NavLink Component
 const NavLink = memo(({ link, index, onClick }) => {
   const location = useLocation();
   const isActive = location.pathname === link.path && !link.disabled;
@@ -98,88 +98,53 @@ const NavLink = memo(({ link, index, onClick }) => {
     <motion.div
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.15 + 0.2, type: "spring", stiffness: 150 }}
-      className={`relative ${link.disabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+      transition={{ delay: index * 0.1 + 0.2, type: "spring", stiffness: 150 }}
+      className={`relative ${link.disabled ? "cursor-not-allowed" : "cursor-pointer"}`}
     >
-      <div className="group relative">
-        <Link
-          to={link.disabled ? "#" : link.path}
-          onClick={(e) => {
-            if (link.disabled) {
-              e.preventDefault();
-              return;
-            }
-            if (onClick) onClick();
-          }}
-          className={`flex items-center px-5 py-2.5 rounded-xl transition-all duration-300 no-underline group ${
-            isActive
-              ? "bg-gradient-to-r from-secondColor to-white bg-clip-text text-white shadow-[0_0_12px_rgba(139,92,246,0.2)]"
-              : link.disabled
-              ? "opacity-50 cursor-not-allowed"
-              : "hover:bg-gray-700/40"
-          }`}
-        >
-          {/* Icon */}
-          <motion.span
-            className={`w-5 h-5 ${
-              isActive ? "text-secondColor/2" : "text-secondColor"
-            } ${link.disabled ? "text-gray-400" : "group-hover:text-secondColor"} transition-colors duration-300`}
-            whileHover={!link.disabled ? { scale: 1.15, rotate: 360 } : {}}
-            transition={{ duration: 0.4 }}
-          >
-            {link.icon}
-          </motion.span>
-
-          {/* Text */}
-          <span
-            className={`ml-3 text-base font-semibold ${
-              isActive ? "text-white" : link.disabled ? "text-gray-400" : "text-gray-200"
-            } ${!link.disabled && "group-hover:text-white"} transition-colors duration-300`}
-          >
-            {link.name}
-          </span>
-
-          {/* Active Indicator */}
-          {isActive && (
-            <motion.div
-              className="absolute -bottom-1 left-1/2 w-8 h-1 bg-gradient-to-r from-secondColor to-white bg-clip-text rounded-full transform -translate-x-1/2"
-              layoutId="activeIndicator"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ type: "spring", stiffness: 200, damping: 20 }}
-            />
-          )}
-        </Link>
-
-        {/* Tooltip for disabled link */}
-        {link.disabled && link.tooltip && (
-          <motion.div 
-            className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1 bg-gray-800 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none z-50"
-            initial={{ y: 10 }}
-            animate={{ y: 0 }}
-          >
-            {link.tooltip}
-          </motion.div>
-        )}
-
-        {/* Hover Glow Effect (only for non-disabled links) */}
-        {!link.disabled && (
+      <Link
+        to={link.disabled ? "#" : link.path}
+        onClick={(e) => {
+          if (link.disabled) e.preventDefault();
+          if (onClick) onClick();
+        }}
+        className={`relative flex items-center px-3 py-2 rounded-lg text-sm lg:text-base font-medium transition-all duration-300 no-underline ${
+          isActive
+            ? "bg-secondColor/20 text-white shadow-md"
+            : link.disabled
+            ? "opacity-50 text-gray-400"
+            : "text-gray-200 hover:bg-gray-700/50 hover:text-white"
+        }`}
+      >
+        {link.name}
+        {isActive && (
           <motion.div
-            className="absolute inset-0 rounded-xl bg-gradient-to-r from-secondColor to-white bg-clip-text opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            style={{ zIndex: -1 }}
+            className="absolute -bottom-1 left-1/2 w-1/2 h-1 bg-secondColor rounded-full transform -translate-x-1/2"
+            layoutId="activeIndicator"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 200 }}
           />
         )}
-      </div>
+        {link.disabled && (
+          <motion.span
+            className="absolute -top-1 -right-1 bg-secondColor/80 text-white text-xs font-semibold px-1.5 py-0.5 rounded-full shadow-sm"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 300, delay: 0.2 }}
+          >
+            Coming Soon
+          </motion.span>
+        )}
+      </Link>
     </motion.div>
   );
 });
 
-// Mobile Menu Component
 const MobileMenu = memo(({ menuOpen, setMenuOpen, setIsModalOpen }) => (
   <AnimatePresence>
     {menuOpen && (
       <motion.div
-        className="fixed top-20  transform -translate-x-1/2 w-[90%] max-w-sm bg-slate-900/95 backdrop-blur-xl rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.4)] py-6 px-4 md:hidden z-40"
+        className="fixed top-20 left-1/2 transform -translate-x-1/2 w-[90%] sm:w-[80%] md:w-[70%] max-w-lg bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-lg py-6 px-4 lg:hidden z-40"
         initial={{ opacity: 0, y: -20, scale: 0.9 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: -20, scale: 0.9 }}
@@ -198,81 +163,21 @@ const MobileMenu = memo(({ menuOpen, setMenuOpen, setIsModalOpen }) => (
             setIsModalOpen(true);
             setMenuOpen(false);
           }}
-          className="w-full mt-4 bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-cyan-600 transition-all duration-300"
+          className="w-full mt-4 flex items-center justify-center bg-gradient-to-r from-secondColor to-white-400  text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-secondColor/80 transition-all duration-300"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          Get in Touch
+          Contact US
         </motion.button>
       </motion.div>
     )}
   </AnimatePresence>
 ));
 
-// Contact Modal Component
-const ContactModal = memo(({ isOpen, setIsOpen }) => (
-  <AnimatePresence>
-    {isOpen && (
-      <motion.div
-        className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      >
-        <motion.div
-          className="bg-white p-6 rounded-xl shadow-xl max-w-md w-full text-center"
-          initial={{ y: -50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -50, opacity: 0 }}
-          transition={{ duration: 0.4 }}
-        >
-          <h2 className="text-2xl font-bold text-slate-900 mb-4">Contact Us</h2>
-          <input
-            type="text"
-            placeholder="Your Name"
-            className="w-full p-3 border border-slate-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-cyan-400"
-          />
-          <input
-            type="email"
-            placeholder="Your Email"
-            className="w-full p-3 border border-slate-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-cyan-400"
-          />
-          <textarea
-            placeholder="Your Message"
-            className="w-full p-3 border border-slate-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-cyan-400"
-            rows="4"
-          />
-          <div className="flex justify-between">
-            <motion.button
-              className="bg-gradient-to-r from-cyan-400 to-blue-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-cyan-600 transition-all duration-300"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Send
-            </motion.button>
-            <motion.button
-              onClick={() => setIsOpen(false)}
-              className="text-slate-500 hover:text-slate-700 px-6 py-2 rounded-lg transition-all duration-300"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Close
-            </motion.button>
-          </div>
-        </motion.div>
-      </motion.div>
-    )}
-  </AnimatePresence>
-));
-
-
-
-// ScrollProgressBar Component
 const ScrollProgressBar = memo(({ progress }) => {
   const barRef = useRef(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
-  // Dynamically measure the navbar dimensions
   useEffect(() => {
     const updateDimensions = () => {
       if (barRef.current) {
@@ -285,39 +190,36 @@ const ScrollProgressBar = memo(({ progress }) => {
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
-  // Calculate perimeter and progress stroke
   const { width, height } = dimensions;
-  const perimeter = 2 * (width + height); // Total length of the rectangle’s outline
+  const perimeter = 2 * (width + height);
   const strokeDasharray = perimeter;
   const strokeDashoffset = perimeter - (progress / 100) * perimeter;
 
   return (
     <svg
       ref={barRef}
-      className="absolute  inset-0 w-full h-full z-30 pointer-events-none"
+      className="absolute inset-0 w-full h-full z-30 pointer-events-none"
       preserveAspectRatio="none"
     >
-      {/* Background rectangle */}
       <rect
         x="2"
         y="2"
         width={width - 4}
         height={height - 4}
-        stroke="#1e293b" // Dark gray base stroke
-        strokeWidth="4"
+        stroke="#1e293b"
+        strokeWidth="3"
         fill="none"
-        rx="16" // Matches rounded-full aesthetic
+        rx="12"
       />
-      {/* Animated progress rectangle */}
       <motion.rect
         x="2"
         y="2"
         width={width - 4}
         height={height - 4}
         stroke="url(#progressGradient)"
-        strokeWidth="4"
+        strokeWidth="3"
         fill="none"
-        rx="16"
+        rx="12"
         strokeDasharray={strokeDasharray}
         strokeDashoffset={strokeDashoffset}
         strokeLinecap="round"
@@ -325,79 +227,14 @@ const ScrollProgressBar = memo(({ progress }) => {
         animate={{ strokeDashoffset }}
         transition={{ duration: 0.1 }}
       />
-      {/* Gradient definition */}
       <defs>
         <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#06b6d4" /> {/* Cyan */}
-          <stop offset="100%" stopColor="#3b82f6" /> {/* Blue */}
+          <stop offset="0%" stopColor="#1C68AA" /> {/* secondColor */}
+          <stop offset="100%" stopColor="#FFFFFF" /> {/* White */}
         </linearGradient>
       </defs>
     </svg>
   );
 });
-
-// Links Data
-// Custom SVG Icons
-const HomeIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z" />
-    <polyline points="9 22 9 12 15 12 15 22" />
-  </svg>
-);
-
-const AboutIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <circle cx="12" cy="8" r="4" />
-    <path d="M4 20s2-4 8-4 8 4 8 4" />
-  </svg>
-);
-
-const ServiceIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M12 2a10 10 0 0 0-7 17l2-4a6 6 0 0 1 10 0l2 4a10 10 0 0 0-7-17z" />
-    <circle cx="12" cy="8" r="2" />
-  </svg>
-);
-
-const WorkIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <rect x="3" y="4" width="18" height="16" rx="2" />
-    <path d="M16 2v4" />
-    <path d="M8 2v4" />
-    <path d="M3 10h18" />
-  </svg>
-);
-
-const ContactIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-    <polyline points="22,6 12,13 2,6" />
-  </svg>
-);
-
-const CourseIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <path d="M2 3h20v6H2z" />
-    <path d="M2 9h20v12H2z" />
-    <path d="M7 14h10" />
-    <path d="M7 17h5" />
-  </svg>
-);
-
-// Update the links array (replace the existing one)
-const links = [
-  { name: "Home", path: "/", icon: <HomeIcon /> },
-  { name: "About", path: "/about", icon: <AboutIcon /> },
-  { name: "Service", path: "/services", icon: <ServiceIcon /> },
-  { name: "Work", path: "/work", icon: <WorkIcon /> },
-  { 
-    name: "Courses", 
-    path: "/courses", 
-    icon: <CourseIcon />, 
-    disabled: true,
-    tooltip: "Coming Soon"
-  },
-  { name: "Contact", path: "/contact", icon: <ContactIcon /> },
-];
 
 export default Navbar;
